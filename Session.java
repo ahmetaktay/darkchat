@@ -7,7 +7,7 @@ import java.net.*;
 import java.lang.Math;
 
 
-public class User {
+public class Session {
 
 } // end of class
 
