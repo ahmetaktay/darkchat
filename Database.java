@@ -13,17 +13,18 @@ public class Database {
     Statement stat;
 	
     //Constructor
-    public Database() {
+    public Database() throws Exception  {
       Class.forName("org.sqlite.JDBC");
-      conn = DriverManager.getConnection("jdbc:sqlite:test.db");
+      conn = DriverManager.getConnection("jdbc:sqlite:darkchat.db");
       stat = conn.createStatement();
-      stat.executeUpdate("drop table if exists people;");
       prep = conn.prepareStatement("insert into ? values (?, ?);");
-      stat.executeUpdate("create table people (name, occupation);");
+      stat.executeUpdate("create table if not exists people (name, occupation);");
+      stat.executeUpdate("create table if not exists people (name, occupation);");
+      stat.executeUpdate("create table if not exists people (name, occupation);");
 
     }
 	
-    public void setThing() {
+    public void setThing()  throws Exception {
       prep.setString(1, "Gandhi");
       prep.setString(2, "politics");
       prep.addBatch();
@@ -39,7 +40,7 @@ public class Database {
       conn.setAutoCommit(true);
     }
     
-    public void get() {
+    public void get()  throws Exception {
       ResultSet rs = stat.executeQuery("select * from people;");
       while (rs.next()) {
         System.out.println("name = " + rs.getString("name"));
@@ -48,7 +49,7 @@ public class Database {
       rs.close();
     }
     
-    public void close() {
+    public void close()  throws Exception {
       conn.close();
     }
   
