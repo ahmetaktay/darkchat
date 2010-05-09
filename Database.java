@@ -18,9 +18,9 @@ public class Database {
       conn = DriverManager.getConnection("jdbc:sqlite:darkchat.db");
       stat = conn.createStatement();
       prep = conn.prepareStatement("insert into ? values (?, ?);");
-      stat.executeUpdate("create table if not exists people (name, occupation);");
-      stat.executeUpdate("create table if not exists people (name, occupation);");
-      stat.executeUpdate("create table if not exists people (name, occupation);");
+      stat.executeUpdate("create table if not exists users (user_id,username);");
+      stat.executeUpdate("create table if not exists buddies (user_id, buddy_id);");
+      stat.executeUpdate("create table if not exists sessions (user_id,ip,last_active);");
 
     }
 	
