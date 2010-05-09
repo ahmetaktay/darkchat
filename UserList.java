@@ -8,6 +8,9 @@ import java.lang.Math;
 
 
 public class UserList {
-
+	public UserList loadFromDatabase(){
+		UserList userList = new UserList();
+		return userList;
+	}
 } // end of class
 

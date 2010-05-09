@@ -8,6 +8,7 @@ import java.lang.Math;
 
 
 public class Client {
-
+	UserList everyone = UserList.loadFromDatabase;
+	
 } // end of class
 
