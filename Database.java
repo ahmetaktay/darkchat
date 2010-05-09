@@ -17,11 +17,16 @@ public class Database {
       Class.forName("org.sqlite.JDBC");
       conn = DriverManager.getConnection("jdbc:sqlite:darkchat.db");
       stat = conn.createStatement();
-      users = conn.prepareStatement("insert into users values (?, ?);");
+      
+      //Create tables:
       stat.executeUpdate("create table if not exists users (user_id,username);");
       stat.executeUpdate("create table if not exists buddies (user_id, buddy_id);");
       stat.executeUpdate("create table if not exists sessions (user_id,ip,last_active);");
 
+      //Create prepared statements
+      users    = conn.prepareStatement("insert into users values (?, ?);");
+      buddies  = conn.prepareStatement("insert into buddies values (?, ?);");
+      sessions = conn.prepareStatement("insert into sessions values (?, ?, ?);");
     }
 	
     public void addUser(int id, String username)  throws Exception {
@@ -39,8 +44,8 @@ public class Database {
     public void get()  throws Exception {
       ResultSet rs = stat.executeQuery("select * from users;");
       while (rs.next()) {
-        System.out.println("name = " + rs.getString("name"));
-        System.out.println("job = " + rs.getString("occupation"));
+        System.out.println("id = " + rs.getInt("id"));
+        System.out.println("username = " + rs.getString("username"));
       }
       rs.close();
     }
