@@ -3,7 +3,7 @@
  *  CS435: Final Project
  */
 import java.sql.*;
-
+import java.lang.String;
 
 public class Database {
 
@@ -24,7 +24,7 @@ public class Database {
 
     }
 	
-    public void addUser(int id, string username)  throws Exception {
+    public void addUser(int id, String username)  throws Exception {
       users.setString(1, "users");
       users.setInt(2, id);
       users.setString(3, username);
