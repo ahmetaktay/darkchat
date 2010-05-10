@@ -9,7 +9,7 @@ import java.lang.Math;
 
 public class UserList {
 	public UserList loadFromDatabase(){
-		UserList userList = new UserList();
+		UserList userList = new UserList(); // haha faked it there is no db yet
 		return userList;
 	}
 } // end of class

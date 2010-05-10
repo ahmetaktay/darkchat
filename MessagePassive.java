@@ -8,6 +8,7 @@ import java.lang.Math;
 
 
 public class MessagePassive {
-
+	public User localUser;
+	//public declareOnline()
 } // end of class
 
