@@ -10,6 +10,8 @@ public class Database {
     //Database connection
     Connection conn;
     PreparedStatement users;
+    PreparedStatement buddies;
+    PreparedStatement sessions;
     Statement stat;
 	
     //Constructor

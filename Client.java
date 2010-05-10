@@ -8,7 +8,10 @@ import java.lang.Math;
 
 
 public class Client {
-	UserList everyone = UserList.loadFromDatabase;
+	
+	public static void main(String[] args) {
+		UserList knownUsers = new UserList();
+	}
 	
 } // end of class
 
