@@ -27,18 +27,14 @@ public class Client {
         return;
       }
     }
-
-    //Start the listener thread
-    Thread listener = new Thread(new Listener(localPort,nthreads),"Listener #1");
-    listener.start();
   
     //Set-up the essentials
     Database db = new Database();
-    	InetSocketAddress home = new InetSocketAddress("localhost",localPort);
+    InetSocketAddress home = new InetSocketAddress("localhost",localPort);
 		UserList knownUsers = new UserList(); // replace this with load from db.
     
     //Start the listener thread
-    Thread listener = new Thread(new Listener(localPort,nthreads,knownUsers));
+    Thread listener = new Thread(new Listener(localPort,nthreads,knownUsers),"Listener #1");
     listener.start();
   
 
@@ -48,8 +44,7 @@ public class Client {
 		User nathan = knownUsers.get("nathan");
 		nathan.putSession(home);
 		
-		MessagePassive passiveMessager = new MessagePassive(ahmet);
-		passiveMessager.declareOnline(nathan);
+
     
     while(true) {
       Thread.sleep(1000);
