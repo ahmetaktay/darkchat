@@ -16,14 +16,16 @@ public class Database {
 	
     //Constructor
     public Database() throws Exception  {
+    
+      //Set-up the database
       Class.forName("org.sqlite.JDBC");
       conn = DriverManager.getConnection("jdbc:sqlite:darkchat.db");
-      stat = conn.createStatement();
       
       //Create tables:
-      stat.executeUpdate("create table if not exists users (user_id,username);");
-      stat.executeUpdate("create table if not exists buddies (user_id, buddy_id);");
-      stat.executeUpdate("create table if not exists sessions (user_id,ip,last_active);");
+      stat = conn.createStatement();
+      stat.executeUpdate("create table if not exists users (user_id PRIMARY KEY,username);");
+      stat.executeUpdate("create table if not exists buddies (user_id PRIMARY KEY, buddy_id);");
+      stat.executeUpdate("create table if not exists sessions (user_id PRIMARY KEY,ip,last_active);");
 
       //Create prepared statements
       users    = conn.prepareStatement("insert into users values (?, ?);");
@@ -32,15 +34,22 @@ public class Database {
     }
 	
     public void addUser(int id, String username)  throws Exception {
+      conn.setAutoCommit(false);
+      
+      //set-up the statement
       users.setString(1, "users");
       users.setInt(2, id);
       users.setString(3, username);
       users.addBatch();
 
-      
-      conn.setAutoCommit(false);
       users.executeBatch();
       conn.setAutoCommit(true);
+    }
+    
+    public boolean userExists(String username) throws Exception {
+      ResultSet rs = stat.executeQuery("select * from users where username = "+username+";");
+      //user exists!
+      rs.close();
     }
     
     public void get()  throws Exception {
