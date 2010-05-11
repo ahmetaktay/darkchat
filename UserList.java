@@ -15,7 +15,7 @@ public class UserList {
 	}
 	
 	public User get(String name){
-		return userHash.get(name);
+		return getOrCreate(name);
 	}
 	public User put(User user){
 		return userHash.put(user.name, user);
