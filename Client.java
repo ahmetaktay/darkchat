@@ -40,9 +40,7 @@ public class Client {
 
 		knownUsers.seed();
 		User ahmet = knownUsers.get("ahmet");
-		ahmet.putSession(home);
 		User nathan = knownUsers.get("nathan");
-		nathan.putSession(home);
 		
 
     
