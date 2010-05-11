@@ -24,13 +24,13 @@ class Listener implements Runnable {
 
       // create server socket
       ServerSocket welcomeSocket = new ServerSocket(port);
-      MyUtils.dPrintLine(" = Listener started at " + port);
+      MyUtils.dPrintLine("Listener started at " + port);
 
       Queue<Socket> q = new LinkedList<Socket>();
 
       for(int i = 0; i < nthreads; i++){
       
-        Thread t = new Thread(new Responder(q,knownUsers));
+        Thread t = new Thread(new Responder(q,knownUsers,String.format("Responder %s",i)));
         t.start();
           
       }
@@ -43,11 +43,12 @@ class Listener implements Runnable {
             q.notifyAll();
           }
         } catch (SocketException se) {
-          MyUtils.dPrintLine(" = Ran out of connections!");
+          MyUtils.dPrintLine("Ran out of connections!");
         }
       }
     }
     catch (Exception e) {
+      System.out.println(e);
       //some sort of exception
     }
   }

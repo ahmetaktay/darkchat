@@ -23,7 +23,7 @@ public class MessagePassive {
 	}
 	
 	public Boolean declareOnline(User fromUser, User toUser) throws Exception {
-		MyUtils.dPrintLine( String.format(" ='%s' notifies '%s'", fromUser.name, toUser.name) );
+		MyUtils.dPrintLine( String.format("'%s' notifies '%s'", fromUser.name, toUser.name) );
 		for (int i = 0; i < toUser.sessions.size(); i++) {
 			try {
       
@@ -37,12 +37,12 @@ public class MessagePassive {
         out.writeBytes(fromUser.name+"\n");
         out.flush();
         
-        MyUtils.dPrintLine(String.format(" =at session %s:%s", toUser.sessions.get(i).address.getHostName(),toUser.sessions.get(i).address.getPort()));
+        MyUtils.dPrintLine(String.format("at session %s:%s", toUser.sessions.get(i).address.getHostName(),toUser.sessions.get(i).address.getPort()));
         socketOut.close();
       }
       catch (ConnectException e) {
         //connection refused
-        MyUtils.dPrintLine(String.format(" = connection refused at %s:%s", toUser.sessions.get(i).address.getHostName(),toUser.sessions.get(i).address.getPort()));
+        MyUtils.dPrintLine(String.format("connection refused at %s:%s", toUser.sessions.get(i).address.getHostName(),toUser.sessions.get(i).address.getPort()));
       }
     }
 		return true;

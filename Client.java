@@ -8,7 +8,7 @@ public class Client {
 	public static void main(String[] args) throws Exception {
     // Defaults:
     int localPort = 6789;
-    int nthreads = 100;
+    int nthreads = 5;
 
     //Iterate through args
     for (int i = 0; i < args.length; i++) {
@@ -38,9 +38,12 @@ public class Client {
 		User ahmet = knownUsers.get("ahmet");
 		User nathan = knownUsers.get("nathan");
 		Session nathanSession = new Session(nathan, "localhost", localPort);
-		MessagePassive passiveMessager = new MessagePassive(ahmet);
-		passiveMessager.declareOnline(nathan);
     
+    while(true) {
+      Thread.sleep(1000);
+      MessagePassive passiveMessager = new MessagePassive(ahmet);
+      passiveMessager.declareOnline(nathan);
+    }
     
     
     //Set-up connection
