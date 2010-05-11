@@ -50,6 +50,7 @@ public class Database {
       ResultSet rs = stat.executeQuery("select * from users where username = "+username+";");
       //user exists!
       rs.close();
+      return false;
     }
     
     public void get()  throws Exception {

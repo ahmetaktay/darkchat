@@ -2,13 +2,8 @@
  *  DarkChat
  *  CS435: Final Project
  */
-import java.io.*;
-import java.net.*;
+
 import java.util.ArrayList;
-import java.lang.Math;
-
-import com.sun.tools.javac.util.List;
-
 
 public class User {
 	public String name;
