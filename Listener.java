@@ -24,7 +24,7 @@ class Listener implements Runnable {
 
       // create server socket
       ServerSocket welcomeSocket = new ServerSocket(port);
-      MyUtils.dPrintLine("Server started; listening at " + port);
+      MyUtils.dPrintLine(" = Listener started at " + port);
 
       Queue<Socket> q = new LinkedList<Socket>();
 
@@ -38,13 +38,12 @@ class Listener implements Runnable {
       while (true) {
         try {
           Socket connectionSocket = welcomeSocket.accept();
-          MyUtils.dPrintLine("connection from " + connectionSocket);
           synchronized(q) {
             q.add(connectionSocket);
             q.notifyAll();
           }
         } catch (SocketException se) {
-          MyUtils.dPrintLine("Ran out of connections!");
+          MyUtils.dPrintLine(" = Ran out of connections!");
         }
       }
     }

@@ -34,7 +34,7 @@ class Responder implements Runnable {
             socket = q.poll();
           }
         }
-        MyUtils.dPrintLine(String.format(" =Connection from %s:%s", socket.getInetAddress().getHostName(),socket.getPort()));
+        MyUtils.dPrintLine(String.format(" = Connection from %s:%s", socket.getInetAddress().getHostName(),socket.getPort()));
         
         // create read stream to get input
         BufferedReader inFromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -45,7 +45,8 @@ class Responder implements Runnable {
           System.out.println(String.format("'%s' is online", ln));
 
           //DEAL WITH USER
-          //User user = knownUsers.get(ln);
+          User user = knownUsers.get(ln,true); //only get if exists
+          user.putSession(new InetSocketAddress(socket.getInetAddress(),socket.getPort()));
         }
         else if (ln.equals("CHT")) {
           String username = inFromClient.readLine();
