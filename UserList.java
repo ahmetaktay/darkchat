@@ -4,6 +4,8 @@
  */
 import java.util.HashMap;
 
+import com.sun.tools.javac.util.Name;
+
 public class UserList {
 	public HashMap<String, User> userHash;
 	
@@ -14,6 +16,22 @@ public class UserList {
 	
 	public User get(String name){
 		return userHash.get(name);
+	}
+	public User put(User user){
+		return userHash.put(user.name, user);
+	}
+	
+	public User getOrCreate(String name)
+	{
+		User user;
+		if (userHash.containsKey(name))
+		{
+			user = userHash.get(name);
+		} else {
+			user = new User(name);
+			userHash.put(name, user);
+		}
+		return user;
 	}
 	
 	public int seed()
