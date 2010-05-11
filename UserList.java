@@ -2,6 +2,7 @@
  *  DarkChat
  *  CS435: Final Project
  */
+import java.net.InetSocketAddress;
 import java.util.HashMap;
 
 public class UserList {
@@ -29,12 +30,16 @@ public class UserList {
 	
 	public int seed()
 	{
+		InetSocketAddress home = new InetSocketAddress("localhost",6789);
 		int count = 0;
 		User u = new User("ahmet");
 		userHash.put(u.name, u);
+		u.putSession(home);
 		count++;
 		u = new User("nathan");
 		userHash.put(u.name, u);
+		u.putSession(home);
+		u.putSession(home);
 		count++;
 		return count;
 	}
