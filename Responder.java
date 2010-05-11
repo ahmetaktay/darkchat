@@ -69,14 +69,18 @@ class Responder implements Runnable {
         else {
           MyUtils.dPrintLine("Unrecognized message format");
         }
-        // send confirm
-        DataOutputStream outToClient = new DataOutputStream(socket.getOutputStream());
-        
-        outToClient.writeBytes("out\n");
-        outToClient.flush();
+        // Send confirmation, if needed
+        if (false) {
+          DataOutputStream outToClient = new DataOutputStream(socket.getOutputStream());
+          
+          outToClient.writeBytes("out\n");
+          outToClient.flush();
+        }
+        socket.close();
       }
     }
     catch (Exception e) {
+      MyUtils.dPrintLine(String.format("%s",e));
       //some sort of exception
     }
   }
