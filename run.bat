@@ -1,0 +1,1 @@
+java -cp ".;sqlitejdbc-v056.jar" Client
