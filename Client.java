@@ -1,3 +1,5 @@
+import java.net.InetSocketAddress;
+
 /*  Ahmet Aktay and Nathan Griffith
  *  DarkChat
  *  CS435: Final Project
@@ -25,8 +27,14 @@ public class Client {
         return;
       }
     }
+
+    //Start the listener thread
+    Thread listener = new Thread(new Listener(localPort,nthreads),"Listener #1");
+    listener.start();
+  
     //Set-up the essentials
-    Database db = new Database(); 
+    Database db = new Database();
+    	InetSocketAddress home = new InetSocketAddress("localhost",localPort);
 		UserList knownUsers = new UserList(); // replace this with load from db.
     
     //Start the listener thread
@@ -36,8 +44,12 @@ public class Client {
 
 		knownUsers.seed();
 		User ahmet = knownUsers.get("ahmet");
+		ahmet.putSession(home);
 		User nathan = knownUsers.get("nathan");
-		Session nathanSession = new Session(nathan, "localhost", localPort);
+		nathan.putSession(home);
+		
+		MessagePassive passiveMessager = new MessagePassive(ahmet);
+		passiveMessager.declareOnline(nathan);
     
     while(true) {
       Thread.sleep(1000);

@@ -4,6 +4,8 @@
  */
 import java.io.*;
 import java.net.*;
+import java.util.Collection;
+import java.util.Iterator;
 import java.lang.Math;
 
 public class MessagePassive {
@@ -24,11 +26,15 @@ public class MessagePassive {
 	
 	public Boolean declareOnline(User fromUser, User toUser) throws Exception {
 		MyUtils.dPrintLine( String.format("'%s' notifies '%s'", fromUser.name, toUser.name) );
-		for (int i = 0; i < toUser.sessions.size(); i++) {
+		Collection<Session> sessionCollection = toUser.sessions.values();
+		Iterator<Session> sessions = sessionCollection.iterator();
+		while (sessions.hasNext()) {
+			Session session = sessions.next();
 			try {
       
         //Create an output stream
-        address = toUser.sessions.get(i).address;
+	
+        address = session.address;
         socketOut = new Socket(address.getHostName(), address.getPort());
         DataOutputStream out = streamOut(socketOut);
         
@@ -37,12 +43,12 @@ public class MessagePassive {
         out.writeBytes(fromUser.name+"\n");
         out.flush();
         
-        MyUtils.dPrintLine(String.format("at session %s:%s", toUser.sessions.get(i).address.getHostName(),toUser.sessions.get(i).address.getPort()));
+        MyUtils.dPrintLine(String.format("at session %s:%s", session.address.getHostName(),session.address.getPort()));
         socketOut.close();
       }
       catch (ConnectException e) {
         //connection refused
-        MyUtils.dPrintLine(String.format("connection refused at %s:%s", toUser.sessions.get(i).address.getHostName(),toUser.sessions.get(i).address.getPort()));
+        MyUtils.dPrintLine(String.format("connection refused at %s:%s", session.address.getHostName(),session.address.getPort()));
       }
     }
 		return true;
