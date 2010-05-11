@@ -26,6 +26,7 @@ public class Session {
 		this.user = user;
 		this.address = inetSocketAddress;
 		this.lastValid = lastValid;
+		user.sessions.add(this);
 	}
 	
 	
