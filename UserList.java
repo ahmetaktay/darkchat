@@ -9,8 +9,7 @@ import com.sun.tools.javac.util.Name;
 public class UserList {
 	public HashMap<String, User> userHash;
 	
-	public UserList()
-	{
+	public UserList() {
 		this.userHash = new HashMap<String, User>(); 
 	}
 	
