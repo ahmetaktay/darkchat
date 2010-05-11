@@ -11,6 +11,7 @@ public class Session {
 	public InetSocketAddress address;
 	public User user;
 	public Date lastValid;
+	public Boolean online;
 	
 	Session(User user, String hostName, int port)
 	{
@@ -22,10 +23,18 @@ public class Session {
 	}
 	Session(User user, InetSocketAddress inetSocketAddress, Date lastValid)
 	{
+		this(user,inetSocketAddress, lastValid, true);
+	}
+	Session(User user, InetSocketAddress inetSocketAddress, Boolean online)
+	{
+		this(user,inetSocketAddress, new Date(), online);
+	}
+	Session(User user, InetSocketAddress inetSocketAddress, Date lastValid, Boolean online)
+	{
 		this.user = user;
 		this.address = inetSocketAddress;
+		this.online = online;
 		this.lastValid = lastValid;
-		user.sessions.add(this);
 	}
 	
 	
