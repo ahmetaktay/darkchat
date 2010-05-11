@@ -11,27 +11,20 @@ public class UserList {
 		this.userHash = new HashMap<String, User>(); 
 	}
 	
-	public User getOnly(String name){
-		return userHash.get(name);
-	}
 	public User get(String name){
-		return getOrCreate(name);
+		return get(name, false);
 	}
-	public User put(User user){
-		return userHash.put(user.name, user);
-	}
-	
-	public User getOrCreate(String name)
+	public User get(String name, Boolean getOnly)
 	{
-		User user;
-		if (userHash.containsKey(name))
-		{
-			user = userHash.get(name);
-		} else {
+		User user = userHash.get(name);
+		if ((user==null) && !getOnly) {
 			user = new User(name);
 			put(user);
 		}
 		return user;
+	}
+	public User put(User user){
+		return userHash.put(user.name, user);
 	}
 	
 	public int seed()
