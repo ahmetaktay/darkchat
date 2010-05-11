@@ -5,6 +5,7 @@
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.util.Date;
 import java.util.HashMap;
 
 public class User {
@@ -36,7 +37,11 @@ public class User {
 	}
 	public void putSession(InetSocketAddress inetSocketAddress, Boolean online)
 	{
-		putSession(new Session(this, inetSocketAddress, online));
+		putSession(new Session(this, inetSocketAddress, new Date(), online));
+	}
+	public void putSession(InetSocketAddress inetSocketAddress, Boolean online, Date lastValid)
+	{
+		putSession(new Session(this, inetSocketAddress, lastValid, online));
 	}
 	public Session getSession(InetSocketAddress inetSocketAddress)
 	{
