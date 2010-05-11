@@ -32,11 +32,15 @@ public class User {
 	}
 	public void putSession(InetSocketAddress inetSocketAddress)
 	{
-		putSession(new Session(this, inetSocketAddress));
+		putSession(new Session(this, inetSocketAddress, true));
 	}
 	public void putSession(InetSocketAddress inetSocketAddress, Boolean online)
 	{
 		putSession(new Session(this, inetSocketAddress, online));
+	}
+	public Session getSession(InetSocketAddress inetSocketAddress)
+	{
+		return sessions.get(inetSocketAddress);
 	}
 	
 } // end of class
