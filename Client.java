@@ -25,14 +25,15 @@ public class Client {
         return;
       }
     }
-  
-    //Start the listener thread
-    Thread listener = new Thread(new Listener(localPort,nthreads));
-    listener.start();
-  
     //Set-up the essentials
     Database db = new Database(); 
 		UserList knownUsers = new UserList(); // replace this with load from db.
+    
+    //Start the listener thread
+    Thread listener = new Thread(new Listener(localPort,nthreads,knownUsers));
+    listener.start();
+  
+
 		knownUsers.seed();
 		User ahmet = knownUsers.get("ahmet");
 		User nathan = knownUsers.get("nathan");

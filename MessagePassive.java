@@ -33,10 +33,8 @@ public class MessagePassive {
         DataOutputStream out = streamOut(socketOut);
         
         //Message format: <online,from_username>
-        String message = "ONL "+fromUser.name+"\n";
-        
-        //Write message
-        out.writeBytes(message);
+        out.writeBytes("ONL\n");
+        out.writeBytes(fromUser.name+"\n");
         out.flush();
         
         MyUtils.dPrintLine(String.format(" = at session %s:%s", toUser.sessions.get(i).address.getHostName(),toUser.sessions.get(i).address.getPort()));

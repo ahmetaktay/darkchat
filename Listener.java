@@ -10,11 +10,12 @@ class Listener implements Runnable {
 
   private int port;
   private int nthreads;
+  private UserList knownUsers;
   
-  public Listener(int port, int nthreads){
+  public Listener(int port, int nthreads, UserList knownUsers){
     this.port = port;
     this.nthreads = nthreads;
-    
+    this.knownUsers = knownUsers;
   }
 
 
@@ -29,7 +30,7 @@ class Listener implements Runnable {
 
       for(int i = 0; i < nthreads; i++){
       
-        Thread t = new Thread(new Responder(q));
+        Thread t = new Thread(new Responder(q,knownUsers));
         t.start();
           
       }
