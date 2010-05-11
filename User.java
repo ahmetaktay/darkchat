@@ -7,8 +7,6 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 
-import com.sun.tools.example.debug.bdi.SessionListener;
-
 public class User {
 	public String name;
 	public HashMap<InetSocketAddress,Session> sessions;

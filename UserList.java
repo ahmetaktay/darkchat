@@ -4,8 +4,6 @@
  */
 import java.util.HashMap;
 
-import com.sun.tools.javac.util.Name;
-
 public class UserList {
 	public HashMap<String, User> userHash;
 	
@@ -14,6 +12,9 @@ public class UserList {
 		this.userHash = new HashMap<String, User>(); 
 	}
 	
+	public User getOnly(String name){
+		return userHash.get(name);
+	}
 	public User get(String name){
 		return getOrCreate(name);
 	}
@@ -29,7 +30,7 @@ public class UserList {
 			user = userHash.get(name);
 		} else {
 			user = new User(name);
-			userHash.put(name, user);
+			put(user);
 		}
 		return user;
 	}
