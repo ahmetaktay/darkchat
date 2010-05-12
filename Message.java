@@ -48,7 +48,6 @@ public class Message {
     return requestPing(localUser,toUser,ofUser);
   }
   public Boolean requestPing(User fromUser, User toUser, User ofUser) throws Exception{
-    //Message format: <online,from_username,returnPort>
     String message = String.format("RUP\n%s\n%s\n%s\n",fromUser.name,port,ofUser.name);
     MyUtils.dPrintLine( String.format("'%s' requests online state of '%s' from '%s'", fromUser.name,ofUser.name, toUser.name) );
     return contactUser(toUser,message);

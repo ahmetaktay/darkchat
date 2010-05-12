@@ -76,6 +76,41 @@ class Responder implements Runnable {
             }
           }
         }
+        else if (ln.equals("RUP")) {
+          String fromUserName = inFromClient.readLine();
+          int portIn = Integer.parseInt(inFromClient.readLine());
+          String ofUserName = inFromClient.readLine();
+          String message = String.format("RU2\n%s\n%s\n%s\n%s\n",fromUserName,socket.getInetAddress(),portIn,ofUserName);
+          User ofUser;
+          synchronized (knownUsers) {
+            ofUser = knownUsers.get(ofUserName,true); //only get if exists
+          }
+          if (ofUser == null) {
+            MyUtils.dPrintLine("Don't know how to forward message!!!");
+          }
+          else {
+            pm.contactUser(ofUser,message);
+          }
+        }
+        else if (ln.equals("RU2")) {
+          String fromUserName = inFromClient.readLine();
+          String ip = inFromClient.readLine();
+          int portIn = Integer.parseInt(inFromClient.readLine());
+          String ofUserName = inFromClient.readLine();
+          synchronized (knownUsers) {
+            fromUser = knownUsers.get(fromUserName,true); //only get if exists
+          }
+          if (fromUser != null) {
+            if (pm.localUser.name.equals(ofUserName))
+              MyUtils.dPrintLine("Recieved update request for a different user");
+            else {
+              fromUser.putSession(new InetSocketAddress(ip,portIn));
+              pm.declareOnline(fromUser, false);
+            }
+          }
+          else
+            MyUtils.dPrintLine("Recieved update request from unknown user");
+        }
         else if (ln.equals("OFL")) {
           ln = inFromClient.readLine();
           port = Integer.parseInt(inFromClient.readLine());
