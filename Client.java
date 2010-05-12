@@ -72,7 +72,7 @@ public class Client {
     
     
     for (User user : knownUsers.userHash.values()) {
-//      passiveMessager.declareOnline(user);
+      passiveMessager.declareOnline(user);
     }
     passiveMessager.requestUserList(knownUsers.get("nathan"));
     //Start the "active" chat thread
