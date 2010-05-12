@@ -39,7 +39,7 @@ public class Session implements Comparable<Session> {
 	
 	public int compareTo(Session session)
 	{
-		return lastValid.compareTo(session.lastValid);
+		return session.lastValid.compareTo(lastValid);
 	}
 	
 } // end of class
