@@ -184,13 +184,13 @@ class Responder implements Runnable {
             else
             {
                 MyUtils.dPrintLine("Received valid BUDs");
-                MyUtils.dPrintLine(String.format("%s sent %s's knowns, delivering them via BUD.", fromUser, ofUser));
+                MyUtils.dPrintLine(String.format("%s sent %s's knowns, delivering them via BUD.", fromUser.name, ofUser.name));
                 synchronized(ofUser)
                 {
                     synchronized(knownUsers)
                     {
-                        String budName = inFromClient.readLine();
-                        while(budName != "")
+                	String budName = inFromClient.readLine();
+                        while(!budName.equals(""))
                         {        
                             User budUser = knownUsers.get(budName);
                             synchronized (budUser) {
