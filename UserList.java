@@ -44,6 +44,12 @@ public class UserList {
 		return count;
 	}
 	
+	public void knownServers()
+	{
+	    UserList list = new UserList();
+	    
+	}
+	
 	public UserList loadFromDatabase(){
 		UserList userList = new UserList(); // haha faked it there is no db yet
 		return userList;

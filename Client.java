@@ -37,6 +37,8 @@ public class Client {
     Database db = new Database();
     InetSocketAddress home = new InetSocketAddress("localhost",localPort);
     UserList knownUsers = new UserList(); // replace this with load from db.
+    UserList knownServers = new UserList();
+    knownServers.loadServers;
     User me = knownUsers.get(username);
     Message passiveMessager = new Message(me,localPort);
     
