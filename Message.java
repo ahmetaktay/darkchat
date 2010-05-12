@@ -33,16 +33,13 @@ public class Message {
     return declareOnline(fromUser, toUser, true);
   }
 	public Boolean declareOnline(User fromUser, User toUser, boolean init) throws Exception {
-		
-    
     //Message format: <online,from_username,returnPort>
-        String message = String.format("ONL\n%s\n%s\n",fromUser.name,port);
-        if (init)
-          message += "INIT\n";
-        else //it is a response
-          message += "RESP\n";
+    String message = String.format("ONL\n%s\n%s\n",fromUser.name,port);
+    if (init)
+      message += "INIT\n";
+    else //it is a response
+      message += "RESP\n";
     MyUtils.dPrintLine( String.format("'%s' attempts to notify '%s'", fromUser.name, toUser.name) );
-    
 		return contactUser(toUser,message);
 	}
   

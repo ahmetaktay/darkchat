@@ -11,9 +11,9 @@ class Listener implements Runnable {
   private int port;
   private int nthreads;
   private UserList knownUsers;
-  private MessagePassive pm;
+  private Message pm;
   
-  public Listener(int port, int nthreads, UserList knownUsers, MessagePassive pm){
+  public Listener(int port, int nthreads, UserList knownUsers, Message pm){
     this.port = port;
     this.nthreads = nthreads;
     this.knownUsers = knownUsers;

@@ -13,9 +13,9 @@ class Responder implements Runnable {
   private Socket socket;
   private UserList knownUsers;
   private String name;
-  private MessagePassive pm;
+  private Message pm;
   
-  public Responder(Queue<Socket> q, UserList knownUsers, MessagePassive pm, String name){
+  public Responder(Queue<Socket> q, UserList knownUsers, Message pm, String name){
     this.q = q;
     this.knownUsers = knownUsers;
     this.name = name;

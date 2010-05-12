@@ -38,7 +38,7 @@ public class Client {
     InetSocketAddress home = new InetSocketAddress("localhost",localPort);
 		UserList knownUsers = new UserList(); // replace this with load from db.
     User me = knownUsers.get(username);
-    MessagePassive passiveMessager = new MessagePassive(me,localPort);
+    Message passiveMessager = new Message(me,localPort);
     
     //Start the listener thread
     Thread listener = new Thread(new Listener(localPort,nthreads,knownUsers,passiveMessager),"Listener #1");
@@ -50,7 +50,7 @@ public class Client {
     passiveMessager.declareOnline(nathan);
     
     //Start the "active" chat thread
-    Thread active = new Thread(new MessageActive(localPort,knownUsers),"ActiveMessager #1");
+    Thread active = new Thread(new Interface(me,localPort,knownUsers, passiveMessager),"Interface #1");
     active.start();
     
     while(active.isAlive()) {
