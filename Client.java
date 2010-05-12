@@ -46,8 +46,8 @@ public class Client {
 
     knownUsers.seed();
     
-    User nathan = knownUsers.get("nathan");
-    passiveMessager.declareOnline(nathan);
+    User ahmet = knownUsers.get("ahmet");
+    passiveMessager.declareOnline(ahmet);
     
     //Start the "active" chat thread
     Thread active = new Thread(new Interface(me,localPort,knownUsers, passiveMessager),"Interface #1");
