@@ -1,0 +1,7 @@
+turtle is server 8888
+clients are 6789
+tick |  termite cobra
+python | termite
+termite |  tick hornet python
+hornet | cobra termite
+cobra | hornet tick
