@@ -13,7 +13,7 @@ public class Database {
     PreparedStatement buddies;
     PreparedStatement sessions;
     Statement stat;
-	
+  
     //Constructor
     public Database() throws Exception  {
     
@@ -32,7 +32,7 @@ public class Database {
       buddies  = conn.prepareStatement("insert into buddies values (?, ?);");
       sessions = conn.prepareStatement("insert into sessions values (?, ?, ?);");
     }
-	
+  
     public void addUser(int id, String username)  throws Exception {
       conn.setAutoCommit(false);
       

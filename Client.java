@@ -6,8 +6,8 @@ import java.net.InetSocketAddress;
  */
 
 public class Client {
-	static String usage = "-p [port_num:int] -t [nthreads:int]";
-	public static void main(String[] args) throws Exception {
+  static String usage = "-p [port_num:int] -t [nthreads:int]";
+  public static void main(String[] args) throws Exception {
     // Defaults:
     int localPort = 6789;
     int nthreads = 5;
@@ -45,7 +45,7 @@ public class Client {
     listener.start();
 
     knownUsers.seed();
-		
+    
     User nathan = knownUsers.get("nathan");
     passiveMessager.declareOnline(nathan);
     
@@ -57,7 +57,7 @@ public class Client {
       Thread.sleep(100);
     }
     System.exit(0);
-	}
-	
+  }
+  
 } // end of class
 

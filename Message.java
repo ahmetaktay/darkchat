@@ -10,30 +10,30 @@ import java.util.Date;
 
 
 public class Message {
-	public User localUser;
+  public User localUser;
   
   private InetSocketAddress address;
-	private Socket socketOut;
+  private Socket socketOut;
   private DataOutputStream out;
   private int port;
   
-	public Message(User localUser, int port)
-	{
-		this.localUser = localUser;
+  public Message(User localUser, int port)
+  {
+    this.localUser = localUser;
     this.port = port;
-	}
-	
-	public Boolean declareOnline(User toUser) throws Exception {
-		return declareOnline(localUser, toUser, true);
-	}
+  }
+  
+  public Boolean declareOnline(User toUser) throws Exception {
+    return declareOnline(localUser, toUser, true);
+  }
 
   public Boolean declareOnline(User toUser, boolean init) throws Exception {
-		return declareOnline(localUser, toUser, init);
-	}
-	public Boolean declareOnline(User fromUser, User toUser) throws Exception {
+    return declareOnline(localUser, toUser, init);
+  }
+  public Boolean declareOnline(User fromUser, User toUser) throws Exception {
     return declareOnline(fromUser, toUser, true);
   }
-	public Boolean declareOnline(User fromUser, User toUser, boolean init) throws Exception {
+  public Boolean declareOnline(User fromUser, User toUser, boolean init) throws Exception {
     //Message format: <online,from_username,returnPort>
     String message = String.format("ONL\n%s\n%s\n",fromUser.name,port);
     if (init)
@@ -41,11 +41,11 @@ public class Message {
     else //it is a response
       message += "RESP\n";
     MyUtils.dPrintLine( String.format("'%s' attempts to notify '%s'", fromUser.name, toUser.name) );
-		return contactUser(toUser,message);
-	}
+    return contactUser(toUser,message);
+  }
   
   public Boolean contactUser(User toUser, String message) throws Exception{
-		for (Session session : toUser.sessions.values()) {
+    for (Session session : toUser.sessions.values()) {
       if (session.online) {
         try {
           //Create an output stream
@@ -77,6 +77,6 @@ public class Message {
     DataOutputStream out = new DataOutputStream( new BufferedOutputStream( socketOut.getOutputStream() ) );
     return out;
   }
-	
+  
 } // end of class
 
