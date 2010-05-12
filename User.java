@@ -15,6 +15,7 @@ import java.util.List;
 public class User {
 	public String name;
 	public HashMap<InetSocketAddress,Session> sessions;
+	public Boolean checked = false;
 	
 	public User()
 	{
@@ -28,6 +29,20 @@ public class User {
 	{
 		this.name = userName;
 		this.sessions = sessionList;
+	}
+	
+	// online offline
+	public Boolean isOnline()
+	{
+			return hasOnlineSession();
+	}
+	public Boolean hasOnlineSession()
+	{
+		Boolean online = false;
+		for (Session session : sessions.values()) {
+			online = online && session.online;
+		}
+		return online;
 	}
 	
 	// session get & put
@@ -93,11 +108,14 @@ public class User {
 	}
 	public void deletePrunedSessions()
 	{
+		HashMap<InetSocketAddress,Session> keptSessions = new HashMap<InetSocketAddress,Session>();
+		
 		for (Session session : sessions.values()) {
-			if (session.pruneFlag) {
-//				sessions.remove(session.address);
+			if (!session.pruneFlag) {
+				keptSessions.put(session.address,session);
 			}
 		}
+		sessions = keptSessions;
 	}
 	
 	
