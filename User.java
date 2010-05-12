@@ -57,7 +57,7 @@ public class User {
 	}
 	public Boolean knowUser(String name)
 	{
-		return knownUsers.get(name, true) == null;
+		return knownUsers.get(name, true) != null;
 	}
 	public Boolean knowUser(User user)
 	{
