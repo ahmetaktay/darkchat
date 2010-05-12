@@ -43,6 +43,11 @@ public class Message {
     return contactUser(toUser,message,true);
   }
   
+  //Request a ping from a given user
+  public Boolean requestPing(User fromUser, User toUser, User ofUser) {
+  
+  }
+  
   public Boolean declareOffline(User toUser) throws Exception {
     return declareOffline(localUser,toUser);
   }
