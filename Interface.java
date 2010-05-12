@@ -57,7 +57,7 @@ public class Interface implements Runnable {
           }
           else if ((elems[0].equals("\\users"))||(elems[0].equals("\\online"))) {
             for (User user : knownUsers.userHash.values()) {
-              System.out.println(user.name);
+              System.out.println(String.format(" *%s",user.name));
             }
           }
           else {
@@ -70,7 +70,7 @@ public class Interface implements Runnable {
           }
           else {
             //construct
-            String message = String.format("CHT\n%s\n%s\n%s\n%s",fromUser.name,toUser.name,port,line);
+            String message = String.format("CHT\n%s\n%s\n%s\n%s\n",fromUser.name,toUser.name,port,line);
             if (m.contactUser(toUser,message))
               MyUtils.dPrintLine("Chat sent to "+toUser.name);
           }
