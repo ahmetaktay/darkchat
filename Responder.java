@@ -165,7 +165,7 @@ class Responder implements Runnable {
           if (fromUser == null)
           {
             MyUtils.dPrintLine("Recieved knowns REQuest from unknown user:");
-            MyUtils.dPrintLine(String.format("%s: %s", fromUser.name,ln));
+            MyUtils.dPrintLine(String.format("%s: %s", fromUserName,ln));
             // do not respond
           }
           else if (ofUser == null)
