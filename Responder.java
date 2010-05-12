@@ -14,6 +14,8 @@ class Responder implements Runnable {
   private UserList knownUsers;
   private String name;
   private Message pm;
+  User toUser;
+  User fromUser;
   
   public Responder(Queue<Socket> q, UserList knownUsers, Message pm, String name){
     this.q = q;
@@ -47,48 +49,54 @@ class Responder implements Runnable {
         // create read stream to get input
         BufferedReader inFromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         String ln = inFromClient.readLine();
-
-        if (ln.equals("ONL")) //user is online
+        
+        int port = socket.getPort();
+        if (ln.equals("ONL")) //fromUser is online
         { 
           ln = inFromClient.readLine();
-          String port = inFromClient.readLine();
+          port = Integer.parseInt(inFromClient.readLine());
           String state = inFromClient.readLine();
           System.out.println(String.format("'%s' is online", ln));
 
           //DEAL WITH USER
-          User user;
           synchronized (knownUsers) {
-            user = knownUsers.get(ln,true); //only get if exists
+            fromUser = knownUsers.get(ln,true); //only get if exists
           }
-          synchronized (user) {
-            if (user != null) {
-              user.putSession(new InetSocketAddress(socket.getInetAddress(),Integer.parseInt(port)));
+          synchronized (fromUser) {
+            if (fromUser != null) {
+              fromUser.putSession(new InetSocketAddress(socket.getInetAddress(),port));
               if (state.equals("INIT")) {
                 synchronized (pm) {
-                  pm.declareOnline(user, false);
+                  pm.declareOnline(fromUser, false);
                 }
               }
             }
           }
         }
-        else if (ln.equals("CHT")) 
+        else if (ln.equals("CHT")) //fromUser is chatting with you!
         {
-          String username = inFromClient.readLine();
+          String fromUsername = inFromClient.readLine();
+          String toUsername = inFromClient.readLine();
+          port = Integer.parseInt(inFromClient.readLine());
           ln = inFromClient.readLine();
           synchronized (knownUsers) {
-            user = knownUsers.get(ln,true); //only get if exists
+            fromUser = knownUsers.get(fromUsername,true); //only get if exists
+            toUser   = knownUsers.get(toUsername,  true);
           }
-          synchronized (user) {
-            if (user != null) {
-              System.out.println(String.format("%s: %s", user.name,ln));
-              user.putSession(new InetSocketAddress(socket.getInetAddress(),new Date()));
+          synchronized (fromUser) {
+            if (toUser.name != pm.localUser.name) {
+              MyUtils.dPrintLine("Recieved chat with incorrect user fields:");
+              MyUtils.dPrintLine(String.format("%s to %s: %s", fromUser.name,toUser.name,ln));
+            }
+            else if (fromUser != null) {
+              System.out.println(String.format("%s: %s", fromUser.name,ln));
+              fromUser.putSession(new InetSocketAddress(socket.getInetAddress(),port));
+            }
+            else {
+              MyUtils.dPrintLine("Recieved chat from unknown user:");
+              MyUtils.dPrintLine(String.format("%s: %s", fromUser.name,ln));
             }
           }
-          
-          
-          
-          
-          
         }
         else
           MyUtils.dPrintLine("Unrecognized message format");
