@@ -190,15 +190,6 @@ class Responder implements Runnable {
         else if (ln.equals("BUD")) // someone is delivering known users
         {
         // TODO: check if we requested one
-/*        String message = String.format("BUD\n%s\n%s\n", localUser.name, port, ofUserName);
-          String fromUserName = inFromClient.readLine();
-          String ofUserName = inFromClient.readLine();
-          port = Integer.parseInt(inFromClient.readLine());
-          Boolean friends = false;
-          synchronized (knownUsers) {
-          fromUser = knownUsers.get(fromUserName,true);
-          ofUser          = knownUsers.get(ofUserName,true);
-          }*/
           String fromUserName = inFromClient.readLine();
           port = Integer.parseInt(inFromClient.readLine());
           String ofUserName = inFromClient.readLine();

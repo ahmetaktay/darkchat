@@ -95,7 +95,7 @@ public class Client {
       passiveMessager.requestUserList(server);
       synchronized (knownUsers) {
         for (User user : knownUsers.userHash.values()) {
-          passiveMessager.declareOnline(user);
+          passiveMessager.requestPing(me, server, user);
         }
       }
     }
