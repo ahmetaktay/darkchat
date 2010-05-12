@@ -3,7 +3,7 @@ import java.util.Date;
 
 
 public class MyUtils {
-  public static Boolean debugFlag = true; 
+  public static Boolean debugFlag = false; 
   public static void dPrintLine(String toBePrinted){
     if (debugFlag) {
       System.out.println(" = " + toBePrinted);
