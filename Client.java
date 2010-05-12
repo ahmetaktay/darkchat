@@ -97,6 +97,7 @@ public class Client {
       synchronized (knownUsers) {
         for (User user : knownUsers.userHash.values()) {
           passiveMessager.requestPing(me, server, user);
+          MyUtils.dPrintLine(String.format("%s pinging %s via %s",me.name, user.name,server.name));
         }
       }
     }
