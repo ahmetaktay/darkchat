@@ -7,14 +7,14 @@ import java.net.*;
 import java.lang.Math;
 
 
-public class MessageActive implements Runnable {
+public class Interface implements Runnable {
 
   private int port;
   private UserList knownUsers;
   private MessagePassive pm;
   private User chattingWith;
 
-  public MessageActive(int port, UserList knownUsers){
+  public Interface(int port, UserList knownUsers){
     this.port = port;
     this.knownUsers = knownUsers;
   }
@@ -34,12 +34,17 @@ public class MessageActive implements Runnable {
           if (elems[0].equals("\\chat")&&(elems.length > 1)) {
             //switch to chat with this user
             chattingWith = knownUsers.get(elems[1],true);
+            if (chattingWith != null)
+              System.out.println("Starting chat session with "+elems[1]);
+            else
+              System.out.println("Unrecognized username");
           }
           else if (elems[0].equals("\\help")) {
             System.out.println("I got nothin'");
           }
           else if (elems[0].equals("\\quit")||elems[0].equals("\\exit")) {
             System.out.println("Quitting...");
+            System.exit(0);
           }
           else {
             System.out.println("Unrecognized macro! (\\help for help)");

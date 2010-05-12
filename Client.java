@@ -53,9 +53,10 @@ public class Client {
     Thread active = new Thread(new MessageActive(localPort,knownUsers),"ActiveMessager #1");
     active.start();
     
-    //Set-up connection
-    //ServerSocket socketIn = new ServerSocket(localPort); //socket for listening
-    
+    while(active.isAlive()) {
+      Thread.sleep(100);
+    }
+    System.exit(0);
 	}
 	
 } // end of class

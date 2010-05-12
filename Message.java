@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.lang.Math;
 
-public class MessagePassive {
+public class Message {
 	public User localUser;
   
   private InetSocketAddress address;
@@ -16,7 +16,7 @@ public class MessagePassive {
   private DataOutputStream out;
   private int port;
   
-	public MessagePassive(User localUser, int port)
+	public Message(User localUser, int port)
 	{
 		this.localUser = localUser;
     this.port = port;
@@ -34,26 +34,31 @@ public class MessagePassive {
   }
 	public Boolean declareOnline(User fromUser, User toUser, boolean init) throws Exception {
 		
+    
+    //Message format: <online,from_username,returnPort>
+        String message = String.format("ONL\n%s\n%s\n",fromUser.name,port);
+        if (init)
+          message += "INIT\n";
+        else //it is a response
+          message += "RESP\n";
+    MyUtils.dPrintLine( String.format("'%s' attempts to notify '%s'", fromUser.name, toUser.name) );
+    
+		return contactUser(toUser,message);
+	}
+  
+  public Boolean contactUser(User toUser, String message) throws Exception{
 		for (Session session : toUser.sessions.values()) {
 			try {
-        MyUtils.dPrintLine( String.format("'%s' attempts to notify '%s'", fromUser.name, toUser.name) );
         //Create an output stream
 	
         address = session.address;
         socketOut = new Socket(address.getHostName(), address.getPort());
         DataOutputStream out = streamOut(socketOut);
         
-        //Message format: <online,from_username>
-        out.writeBytes("ONL\n");
-        out.writeBytes(fromUser.name+"\n");
-        out.writeBytes(String.format("%s\n",port));
-        if (init)
-          out.writeBytes("INIT\n");
-        else
-          out.writeBytes("RESP\n");
+        out.writeBytes(message);
         out.flush();
         
-        MyUtils.dPrintLine(String.format("at session %s:%s", session.address.getHostName(),session.address.getPort()));
+        MyUtils.dPrintLine(String.format("Contacting %s:%s", session.address.getHostName(),session.address.getPort()));
         socketOut.close();
       }
       catch (ConnectException e) {
@@ -61,8 +66,8 @@ public class MessagePassive {
         MyUtils.dPrintLine(String.format("connection refused at %s:%s", session.address.getHostName(),session.address.getPort()));
       }
     }
-		return true;
-	}
+    return true;
+  }
   
   private DataOutputStream streamOut(Socket socketOut) throws Exception {
     DataOutputStream out = new DataOutputStream( new BufferedOutputStream( socketOut.getOutputStream() ) );
