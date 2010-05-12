@@ -26,10 +26,8 @@ public class MessagePassive {
 	
 	public Boolean declareOnline(User fromUser, User toUser) throws Exception {
 		MyUtils.dPrintLine( String.format("'%s' notifies '%s'", fromUser.name, toUser.name) );
-		Collection<Session> sessionCollection = toUser.sessions.values();
-		Iterator<Session> sessions = sessionCollection.iterator();
-		while (sessions.hasNext()) {
-			Session session = sessions.next();
+
+		for (Session session : toUser.sessions.values()) {
 			try {
       
         //Create an output stream

@@ -7,7 +7,7 @@ import java.net.*;
 import java.util.Date;
 
 
-public class Session {
+public class Session implements Comparable<Session> {
 	public InetSocketAddress address;
 	public User user;
 	public Date lastValid;
@@ -37,6 +37,10 @@ public class Session {
 		this.lastValid = lastValid;
 	}
 	
+	public int compareTo(Session session)
+	{
+		return lastValid.compareTo(session.lastValid);
+	}
 	
 } // end of class
 
