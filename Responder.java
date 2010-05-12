@@ -13,11 +13,13 @@ class Responder implements Runnable {
   private Socket socket;
   private UserList knownUsers;
   private String name;
+  private MessagePassive pm;
   
-  public Responder(Queue<Socket> q, UserList knownUsers, String name){
+  public Responder(Queue<Socket> q, UserList knownUsers, MessagePassive pm, String name){
     this.q = q;
     this.knownUsers = knownUsers;
     this.name = name;
+    this.pm = pm;
   }
 
 
@@ -46,8 +48,11 @@ class Responder implements Runnable {
         BufferedReader inFromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         String ln = inFromClient.readLine();
 
-        if (ln.equals("ONL")) { //user is online
+        if (ln.equals("ONL")) //user is online
+        { 
           ln = inFromClient.readLine();
+          String port = inFromClient.readLine();
+          String state = inFromClient.readLine();
           System.out.println(String.format("'%s' is online", ln));
 
           //DEAL WITH USER
@@ -56,27 +61,31 @@ class Responder implements Runnable {
             user = knownUsers.get(ln,true); //only get if exists
           }
           synchronized (user) {
-            if (user != null)
-              user.putSession(new InetSocketAddress(socket.getInetAddress(),socket.getPort()));
+            if (user != null) {
+              user.putSession(new InetSocketAddress(socket.getInetAddress(),Integer.parseInt(port)));
+              if (state.equals("INIT")) {
+                synchronized (pm) {
+                  pm.declareOnline(user, false);
+                }
+                user.notified = true;
+              }
+            }
           }
         }
-        else if (ln.equals("CHT")) {
+        else if (ln.equals("CHT")) 
+        {
           String username = inFromClient.readLine();
           ln = inFromClient.readLine();
           System.out.println(String.format("%s: %s", username,ln));
           
         }
-        else {
+        else
           MyUtils.dPrintLine("Unrecognized message format");
-        }
-        // send confirm
-        DataOutputStream outToClient = new DataOutputStream(socket.getOutputStream());
-        
-        outToClient.writeBytes("out\n");
-        outToClient.flush();
+        socket.close();
       }
     }
     catch (Exception e) {
+      MyUtils.dPrintLine(String.format("%s",e));
       //some sort of exception
     }
   }
