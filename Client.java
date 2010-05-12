@@ -6,12 +6,17 @@ import java.net.InetSocketAddress;
  */
 
 public class Client {
-  static String usage = "-p [port_num:int] -t [nthreads:int]";
+  static String usage = "-p [port_num:int] -t [nthreads:int] -u [username:string] -sip [server_ip:string] -sp [server_port:int] -s (server flag)";
+
+  
   public static void main(String[] args) throws Exception {
     // Defaults:
     int localPort = 6789;
     int nthreads = 5;
+    String serverIP = "128.36.171.168";
+    int serverPort = 7890;
     String username = "";
+    boolean server_flag = false;
     
     //Iterate through args
     for (int i = 0; i < args.length; i++) {
@@ -24,6 +29,21 @@ public class Client {
         nthreads = Integer.parseInt(args[i]);
       }
       else if (args[i].equals("-u")) {
+        i++;
+        username = args[i];
+      }
+      else if (args[i].equals("-sp")) {
+        i++;
+        serverPort = Integer.parseInt(args[i]);
+      }
+      else if (args[i].equals("-sip")) {
+        i++;
+        serverIP = args[i];
+      }
+      else if (args[i].equals("-s")) {
+        server_flag = true;
+      }
+      else if (args[i].equals("-u")) { //server flag
         i++;
         username = args[i];
       }
@@ -46,21 +66,20 @@ public class Client {
     System.out.println(String.format("| Listening on port: %s",localPort));
     System.out.println("| Enter \"\\help\" for assistance.");
     System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-
-  
-    //Set-up the essentials
-    Database db = new Database();
     
     // Load all previously known users.
     UserList knownUsers = new UserList(); 
-    knownUsers.seed();
     
-    User server = hardcodedServer();
+    
+    User server = new User("server");
+    // for more servers, add to session here
+    server.putSession(new InetSocketAddress(serverIP,serverPort)); // add default server
+    
     //Set-up the user
     InetSocketAddress home = new InetSocketAddress("localhost",localPort);
     User me = knownUsers.get(username);
     me.knownUsers = knownUsers;
-		me.putSession(home); //my first session is localhost
+		me.putSession(home); //my session is localhost
     
     //Set-up the messager object
     Message passiveMessager = new Message(me,localPort);
@@ -71,8 +90,7 @@ public class Client {
 
     
     
-    if (!me.name.equals("server")){
-	// do nothing
+    if (!server_flag){
       passiveMessager.declareOnline(server);
       passiveMessager.requestUserList(server);
       synchronized (knownUsers) {
@@ -81,22 +99,18 @@ public class Client {
         }
       }
     }
+    else {
+      knownUsers.seed(); //if it is a server, seed it with graph data
+    }
     //Start the "active" chat thread
     Thread active = new Thread(new Interface(me,localPort,knownUsers, passiveMessager),"Interface #1");
     active.start();
     
     while(active.isAlive()) {
       Thread.sleep(100);
+      //do stuff
     }
     System.exit(0);
-  }
-  
-  public static User hardcodedServer()
-  {
-      User u = new User("server");
-      // for more servers, add to session here
-      u.putSession(new InetSocketAddress("128.36.171.168",7890)); // ahmet's server config
-      return u;
   }
   
 } // end of class

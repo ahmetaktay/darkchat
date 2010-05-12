@@ -1,1 +1,1 @@
-java -cp ".;sqlitejdbc-v056.jar" Client -u nathan
+java Client -u nathan -sip localhost -sp 8888
