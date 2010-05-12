@@ -62,8 +62,8 @@ class Responder implements Runnable {
           synchronized (knownUsers) {
             fromUser = knownUsers.get(ln,true); //only get if exists
           }
-          synchronized (fromUser) {
-            if (fromUser != null) {
+          if (fromUser != null) {
+            synchronized (fromUser) {
               fromUser.putSession(new InetSocketAddress(socket.getInetAddress(),port));
               if (!fromUser.name.equals(pm.localUser.name)) {
                 System.out.println(String.format("'%s' is online", fromUser.name));
