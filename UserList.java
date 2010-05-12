@@ -27,17 +27,32 @@ public class UserList {
 	public User put(User user){
 		return userHash.put(user.name, user);
 	}
+  
+  public void print() {
+    print(false);
+  }
+  public void print(boolean online) {
+    String output = "";
+    for (User user : this.userHash.values()) {
+      if ((!online)&&(!user.isOnline())) {
+        output += String.format(" -%s\n",user.name);
+      }
+      else if (user.isOnline()) {
+        output += String.format(" +%s\n",user.name);
+      }
+    }
+    if (output.equals(""))
+      output = " (none)\n";
+    System.out.printf(output);
+  }
 	
 	public int seed()
 	{
-		InetSocketAddress home = new InetSocketAddress("128.36.171.168",6789);
 		int count = 0;
-		User u = new User("ahmet");
-		userHash.put(u.name, u);
-		u.putSession(home);
+		User u = this.get("ahmet");
+		u.putSession(new InetSocketAddress("128.36.171.168",6789));
 		count++;
-		u = new User("nathan");
-		userHash.put(u.name, u);
+		u = this.get("nathan");
 		u.putSession(new InetSocketAddress("128.36.156.46",6789));
 		//u.putSession(home);
 		count++;

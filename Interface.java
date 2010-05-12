@@ -45,20 +45,29 @@ public class Interface implements Runnable {
             System.out.println("  \\users\n   -See a list of KNOWN users (online or off)");
             System.out.println("  \\online\n   -See a list of ONLINE users");
             System.out.println("  \\add <username>\n   -Attempt to add username to list of known users");
+            System.out.println("  \\ping <ip> <port>\n  -Attempt to ping the ip at the given port\n  -If no port is specified, the current instance's incoming will be used");
             System.out.println("  \\quit or \\exit\n   -Leave the program gracefully");
           }
           else if (elems[0].equals("\\quit")||elems[0].equals("\\exit")) {
             System.out.println("Quitting...");
+            m.declareOffline(knownUsers);
             System.exit(0);
           }
-          else if (elems[0].equals("\\add")) {
+          else if (elems[0].equals("\\add")&&(elems.length > 1)) {
             //here is where you would poll the server or your buddies to find the user
-            
+            User newUser = knownUsers.get(elems[1]);
+            System.out.println(String.format("Attempting to find user '%s'",newUser.name));
+            //TODO: find user!
+          }
+          else if (elems[0].equals("\\ping")&&(elems.length > 1)) {
+            //ping this IP, saying "I AM ONLINE" to see what happens!
+            String ip = elems[1];
+            int port_ = port;
+            if (elems.length > 2)
+              port_ = Integer.parseInt(elems[2]);
           }
           else if ((elems[0].equals("\\users"))||(elems[0].equals("\\online"))) {
-            for (User user : knownUsers.userHash.values()) {
-              System.out.println(String.format(" *%s",user.name));
-            }
+            knownUsers.print(elems[0].equals("\\online"));
           }
           else {
             System.out.println("Unrecognized macro! (\\help for help)");
@@ -73,6 +82,8 @@ public class Interface implements Runnable {
             String message = String.format("CHT\n%s\n%s\n%s\n%s\n",fromUser.name,toUser.name,port,line);
             if (m.contactUser(toUser,message))
               MyUtils.dPrintLine("Chat sent to "+toUser.name);
+            else
+              System.out.println("Warning: '"+toUser.name+"' did not recieve your chat");
           }
         }
       }
