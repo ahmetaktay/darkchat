@@ -70,7 +70,7 @@ public class Message {
   }
   public Boolean deliverKnownList(User ofUser, User toUser) throws Exception
   {
-    String message = String.format("BUD\n%s\n%s\n", localUser.name, port, ofUser.name);
+    String message = String.format("BUD\n%s\n%s\n%s\n", localUser.name, port, ofUser.name);
     MyUtils.dPrintLine( String.format("'%s' delivers known users of '%s' (to '%s')", localUser.name, ofUser.name, toUser.name) );
     synchronized (ofUser) {
 	for (User user : ofUser.knownUsers.userHash.values()) {

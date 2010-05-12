@@ -183,6 +183,7 @@ class Responder implements Runnable {
           }
           else
           {
+
             MyUtils.dPrintLine("Received valid BUDs");
             MyUtils.dPrintLine(String.format("%s sent %s's knowns, delivering them via BUD.", fromUser.name, ofUser.name));
             synchronized(ofUser)
@@ -190,13 +191,15 @@ class Responder implements Runnable {
               synchronized(knownUsers)
               {
                 String budName = inFromClient.readLine();
-                while(budName != "")
+                while(!budName.equals(""))
                 {
                   User budUser = knownUsers.get(budName);
-                  ofUser.meetUser(budUser);
+                  synchronized (budUser) {
+                    ofUser.meetUser(budUser);
+                  }
                   budName = inFromClient.readLine();
                 }
-                  
+
               }
             }
           }
