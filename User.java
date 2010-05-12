@@ -10,7 +10,6 @@ import java.util.HashMap;
 
 public class User {
 	public String name;
-  public boolean notified; //already sent online notification/response to user
 	public HashMap<InetSocketAddress,Session> sessions;
 	
 	public User()

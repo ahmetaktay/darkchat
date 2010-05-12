@@ -67,7 +67,6 @@ class Responder implements Runnable {
                 synchronized (pm) {
                   pm.declareOnline(user, false);
                 }
-                user.notified = true;
               }
             }
           }
@@ -76,7 +75,19 @@ class Responder implements Runnable {
         {
           String username = inFromClient.readLine();
           ln = inFromClient.readLine();
-          System.out.println(String.format("%s: %s", username,ln));
+          synchronized (knownUsers) {
+            user = knownUsers.get(ln,true); //only get if exists
+          }
+          synchronized (user) {
+            if (user != null) {
+              System.out.println(String.format("%s: %s", user.name,ln));
+              user.putSession(new InetSocketAddress(socket.getInetAddress(),new Date()));
+            }
+          }
+          
+          
+          
+          
           
         }
         else

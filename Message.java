@@ -6,7 +6,8 @@ import java.io.*;
 import java.net.*;
 import java.util.Collection;
 import java.util.Iterator;
-import java.lang.Math;
+import java.util.Date;
+
 
 public class Message {
 	public User localUser;
@@ -45,22 +46,27 @@ public class Message {
   
   public Boolean contactUser(User toUser, String message) throws Exception{
 		for (Session session : toUser.sessions.values()) {
-			try {
-        //Create an output stream
-	
-        address = session.address;
-        socketOut = new Socket(address.getHostName(), address.getPort());
-        DataOutputStream out = streamOut(socketOut);
-        
-        out.writeBytes(message);
-        out.flush();
-        
-        MyUtils.dPrintLine(String.format("Contacting %s:%s", session.address.getHostName(),session.address.getPort()));
-        socketOut.close();
-      }
-      catch (ConnectException e) {
-        //connection refused
-        MyUtils.dPrintLine(String.format("connection refused at %s:%s", session.address.getHostName(),session.address.getPort()));
+      if (session.online) {
+        try {
+          //Create an output stream
+    
+          address = session.address;
+          socketOut = new Socket(address.getHostName(), address.getPort());
+          DataOutputStream out = streamOut(socketOut);
+          
+          out.writeBytes(message);
+          out.flush();
+          
+          MyUtils.dPrintLine(String.format("Contacting %s:%s", session.address.getHostName(),session.address.getPort()));
+          socketOut.close();
+          
+          session.lastValid = new Date();
+        }
+        catch (ConnectException e) {
+          //connection refused
+          session.online = false;
+          MyUtils.dPrintLine(String.format("connection refused at %s:%s", session.address.getHostName(),session.address.getPort()));
+        }
       }
     }
     return true;
