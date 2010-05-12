@@ -149,7 +149,7 @@ class Responder implements Runnable {
             }
             else {
               MyUtils.dPrintLine("Recieved chat from unknown user:");
-              MyUtils.dPrintLine(String.format("%s: %s", fromUser.name,ln));
+              MyUtils.dPrintLine(String.format("%s: %s", fromUsername,ln));
             }
           }
         }
@@ -171,7 +171,7 @@ class Responder implements Runnable {
           else if (ofUser == null)
           {
             MyUtils.dPrintLine("Recieved knowns REQuest of unknown user:");
-            MyUtils.dPrintLine(String.format("%s: %s", ofUser.name,ln));
+            MyUtils.dPrintLine(String.format("%s: %s", ofUserName,ln));
             pm.deliverFakeKnownList(ofUserName, fromUser);
           }
           else if (!fromUser.knowUser(ofUser))
