@@ -71,10 +71,16 @@ public class Client {
 
     
     
-    for (User user : knownUsers.userHash.values()) {
-      passiveMessager.declareOnline(user);
+    if (!me.name.equals("server")){
+	// do nothing
+      passiveMessager.declareOnline(server);
+      passiveMessager.requestUserList(server);
+      synchronized (knownUsers) {
+	for (User user : knownUsers.userHash.values()) {
+        passiveMessager.declareOnline(user);
+      }
+      }
     }
-    passiveMessager.requestUserList(server);
     //Start the "active" chat thread
     Thread active = new Thread(new Interface(me,localPort,knownUsers, passiveMessager),"Interface #1");
     active.start();

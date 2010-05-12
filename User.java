@@ -17,6 +17,7 @@ public class User {
 	public HashMap<InetSocketAddress,Session> sessions;
 	public Boolean checked = false;
 	public UserList knownUsers;
+	public UserList globalUsers;
 	
 	public User()
 	{
@@ -48,10 +49,6 @@ public class User {
 	}
 	
 	// known users
-	public void meetUser(String name)
-	{
-		meetUser(knownUsers.get(name));
-	}
 	public void meetUser(User user)
 	{
 		knownUsers.put(user);

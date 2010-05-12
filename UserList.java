@@ -60,18 +60,18 @@ public class UserList {
 	{
 		int count = 0;
 		User u = this.get("ahmet");
-		u.meetUser("ben");
-		u.meetUser("harley");
-		u.meetUser("elaine");
+		u.meetUser(get("ben"));
+		u.meetUser(get("harley"));
+		u.meetUser(get("elaine"));
 		u.putSession(new InetSocketAddress("128.36.171.168",6789), false);
 		count++;
 		u = this.get("nathan");
-		u.meetUser("michelle");
-		u.meetUser("yang");
+		u.meetUser(get("michelle"));
+		u.meetUser(get("yang"));
 		u.putSession(new InetSocketAddress("128.36.156.46",6789), false);
 		//u.putSession(home);
 		count++;
-		u.meetUser("ahmet");
+		u.meetUser(get("ahmet"));
 		return count;
 	}
 	

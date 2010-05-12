@@ -170,6 +170,9 @@ class Responder implements Runnable {
           synchronized (knownUsers) {
             fromUser = knownUsers.get(fromUserName,true);
             ofUser          = knownUsers.get(ofUserName,true);
+            if (fromUserName.equals("server")) {
+		fromUser = knownUsers.get("server");
+	    }
           }
           if (fromUser == null)
           {
@@ -179,12 +182,12 @@ class Responder implements Runnable {
           else if (ofUser == null)
           {
             MyUtils.dPrintLine("Recieved BUDs of unknown user:");
-            MyUtils.dPrintLine(String.format("%s: %s", ofUser.name,ln));
+            MyUtils.dPrintLine(String.format("%s: %s", ofUserName,ln));
           }
           else
           {
 
-            MyUtils.dPrintLine("Received valid BUDs");
+            MyUtils.dPrintLine("Received valid BUDs from server");
             MyUtils.dPrintLine(String.format("%s sent %s's knowns, delivering them via BUD.", fromUser.name, ofUser.name));
             synchronized(ofUser)
             {
