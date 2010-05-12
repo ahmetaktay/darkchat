@@ -7,21 +7,26 @@ import java.net.*;
 import java.lang.Math;
 
 
-public class MessageActive {
+public class MessageActive implements Runnable {
 
-  public void waitForIncoming(int serverPort) throws Exception {
-    ServerSocket welcomeSocket = new ServerSocket(serverPort);
+  private int port;
+  private UserList knownUsers;
+  private MessagePassive pm;
 
-      while (true){
-        // accept connection from connection queue
-        Socket connectionSocket = welcomeSocket.accept();
-        System.out.println("connection from " + connectionSocket);
-
-        // create input and output streams;
-        DataInputStream inFromClient = new DataInputStream( new BufferedInputStream( connectionSocket.getInputStream() ) );
-      }
+  public MessageActive(int port, UserList knownUsers){
+    this.port = port;
+    this.knownUsers = knownUsers;
   }
 
-
+  public void run() {
+    while (true) {
+      try {
+        java.io.BufferedReader stdin = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
+        String line = stdin.readLine();
+        
+      }
+      catch (java.io.IOException e) { System.out.println(e); }
+    }
+  }
 } // end of class
 

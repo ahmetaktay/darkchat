@@ -14,24 +14,30 @@ public class MessagePassive {
   private InetSocketAddress address;
 	private Socket socketOut;
   private DataOutputStream out;
+  private int port;
   
-	public MessagePassive(User localUser)
+	public MessagePassive(User localUser, int port)
 	{
 		this.localUser = localUser;
+    this.port = port;
 	}
 	
 	public Boolean declareOnline(User toUser) throws Exception {
-		return declareOnline(localUser, toUser);
+		return declareOnline(localUser, toUser, true);
 	}
-	
+  public Boolean declareOnline(User toUser, boolean init) throws Exception {
+		return declareOnline(localUser, toUser, init);
+	}
 	public Boolean declareOnline(User fromUser, User toUser) throws Exception {
-		MyUtils.dPrintLine( String.format("'%s' notifies '%s'", fromUser.name, toUser.name) );
+    return declareOnline(fromUser, toUser, true);
+  }
+	public Boolean declareOnline(User fromUser, User toUser, boolean init) throws Exception {
 		Collection<Session> sessionCollection = toUser.sessions.values();
 		Iterator<Session> sessions = sessionCollection.iterator();
 		while (sessions.hasNext()) {
 			Session session = sessions.next();
 			try {
-      
+        MyUtils.dPrintLine( String.format("'%s' attempts to notify '%s'", fromUser.name, toUser.name) );
         //Create an output stream
 	
         address = session.address;
@@ -41,6 +47,11 @@ public class MessagePassive {
         //Message format: <online,from_username>
         out.writeBytes("ONL\n");
         out.writeBytes(fromUser.name+"\n");
+        out.writeBytes(String.format("%s\n",port));
+        if (init)
+          out.writeBytes("INIT\n");
+        else
+          out.writeBytes("RESP\n");
         out.flush();
         
         MyUtils.dPrintLine(String.format("at session %s:%s", session.address.getHostName(),session.address.getPort()));

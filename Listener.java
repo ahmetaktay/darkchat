@@ -11,11 +11,13 @@ class Listener implements Runnable {
   private int port;
   private int nthreads;
   private UserList knownUsers;
+  private MessagePassive pm;
   
-  public Listener(int port, int nthreads, UserList knownUsers){
+  public Listener(int port, int nthreads, UserList knownUsers, MessagePassive pm){
     this.port = port;
     this.nthreads = nthreads;
     this.knownUsers = knownUsers;
+    this.pm = pm;
   }
 
 
@@ -30,7 +32,7 @@ class Listener implements Runnable {
 
       for(int i = 0; i < nthreads; i++){
       
-        Thread t = new Thread(new Responder(q,knownUsers,String.format("Responder %s",i)));
+        Thread t = new Thread(new Responder(q,knownUsers,pm,String.format("Responder %s",i)));
         t.start();
           
       }

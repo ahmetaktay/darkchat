@@ -11,7 +11,8 @@ public class Client {
     // Defaults:
     int localPort = 6789;
     int nthreads = 5;
-
+    String username = "ahmet";
+    
     //Iterate through args
     for (int i = 0; i < args.length; i++) {
       if (args[i].equals("-p")) {
@@ -21,6 +22,10 @@ public class Client {
       if (args[i].equals("-t")) {
         i++;
         nthreads = Integer.parseInt(args[i]);
+      }
+      if (args[i].equals("-u")) {
+        i++;
+        username = args[i];
       }
       else {
         System.out.println(usage);
@@ -32,23 +37,18 @@ public class Client {
     Database db = new Database();
     InetSocketAddress home = new InetSocketAddress("localhost",localPort);
 		UserList knownUsers = new UserList(); // replace this with load from db.
+    User me = knownUsers.get(username);
+    MessagePassive passiveMessager = new MessagePassive(me,localPort);
     
     //Start the listener thread
-    Thread listener = new Thread(new Listener(localPort,nthreads,knownUsers),"Listener #1");
+    Thread listener = new Thread(new Listener(localPort,nthreads,knownUsers,passiveMessager),"Listener #1");
     listener.start();
   
 
 		knownUsers.seed();
-		User ahmet = knownUsers.get("ahmet");
-		User nathan = knownUsers.get("nathan");
 		
-
-    
-    while(true) {
-      Thread.sleep(1000);
-      MessagePassive passiveMessager = new MessagePassive(ahmet);
-      passiveMessager.declareOnline(nathan);
-    }
+		User nathan = knownUsers.get("nathan");
+    passiveMessager.declareOnline(nathan);
     
     
     //Set-up connection
