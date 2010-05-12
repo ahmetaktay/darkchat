@@ -84,7 +84,7 @@ class Responder implements Runnable {
             toUser   = knownUsers.get(toUsername,  true);
           }
           synchronized (fromUser) {
-            if (toUser.name != pm.localUser.name) {
+            if (!toUser.name.equals(pm.localUser.name)) {
               MyUtils.dPrintLine("Recieved chat with incorrect user fields:");
               MyUtils.dPrintLine(String.format("%s to %s: %s", fromUser.name,toUser.name,ln));
             }
