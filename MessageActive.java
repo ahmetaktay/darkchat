@@ -24,6 +24,9 @@ public class MessageActive implements Runnable {
         java.io.BufferedReader stdin = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
         String line = stdin.readLine();
         
+        socketOut = new Socket(address.getHostName(), port);
+        DataOutputStream out = streamOut(socketOut);
+        System.out.println("YOU TYPED: "+line);
       }
       catch (java.io.IOException e) { System.out.println(e); }
     }

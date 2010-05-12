@@ -43,7 +43,10 @@ public class Client {
     //Start the listener thread
     Thread listener = new Thread(new Listener(localPort,nthreads,knownUsers,passiveMessager),"Listener #1");
     listener.start();
-  
+    
+    //Start the "active" chat thread
+    Thread active = new Thread(new MessageActive(localPort,knownUsers),"ActiveMessager #1");
+    active.start();
 
 		knownUsers.seed();
 		
