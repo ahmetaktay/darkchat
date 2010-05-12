@@ -92,9 +92,9 @@ public class Client {
     
     
     if (!server_flag){
-      passiveMessager.declareOnline(server);
-      passiveMessager.requestUserList(server);
       synchronized (knownUsers) {
+        passiveMessager.declareOnline(server);
+        passiveMessager.requestUserList(server);
         for (User user : knownUsers.userHash.values()) {
           passiveMessager.requestPing(me, server, user);
           MyUtils.dPrintLine(String.format("%s pinging %s via %s",me.name, user.name,server.name));
