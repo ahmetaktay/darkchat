@@ -196,8 +196,9 @@ class Responder implements Runnable {
                             synchronized (budUser) {
                                 ofUser.meetUser(budUser);
                             }
+                            budName = inFromClient.readLine();
                         }
-                        budName = inFromClient.readLine();
+                        
                     }
                 }
             }
