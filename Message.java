@@ -40,7 +40,7 @@ public class Message {
     else //it is a response
       message += "RESP\n";
     MyUtils.dPrintLine( String.format("'%s' attempts to notify '%s' of online state", fromUser.name, toUser.name) );
-    return contactUser(toUser,message);
+    return contactUser(toUser,message,true);
   }
   
   public Boolean declareOffline(User toUser) throws Exception {
@@ -68,11 +68,13 @@ public class Message {
     MyUtils.dPrintLine( String.format("'%s' requests known users of '%s' (from '%s')", localUser.name, ofUser.name, toUser.name) );
     return contactUser(toUser,message);
   }
-  
   public Boolean contactUser(User toUser, String message) throws Exception{
+    return contactUser(toUser,message,false);
+  }
+  public Boolean contactUser(User toUser, String message, boolean offline) throws Exception{
     boolean contacted = false;
     for (Session session : toUser.sessions.values()) {
-      if (session.online) {
+      if (offline||session.online) {
         try {
           //Create an output stream
     
