@@ -25,8 +25,11 @@ public class Interface implements Runnable {
   public void run() {
     while (true) {
       try {
-        java.io.BufferedReader stdin = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
-        String line = stdin.readLine();        
+        String line = "";
+        while (line.equals("")) {
+          java.io.BufferedReader stdin = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
+          line = stdin.readLine();   
+        }
         
         if (line.charAt(0) == '\\') {
           String[] elems = line.split("\\s");
