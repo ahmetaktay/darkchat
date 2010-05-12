@@ -19,11 +19,11 @@ public class Client {
         i++;
         localPort = Integer.parseInt(args[i]);
       }
-      if (args[i].equals("-t")) {
+      else if (args[i].equals("-t")) {
         i++;
         nthreads = Integer.parseInt(args[i]);
       }
-      if (args[i].equals("-u")) {
+      else if (args[i].equals("-u")) {
         i++;
         username = args[i];
       }

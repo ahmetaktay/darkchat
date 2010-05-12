@@ -38,7 +38,7 @@ public class UserList {
 		count++;
 		u = new User("nathan");
 		userHash.put(u.name, u);
-		u.putSession(home);
+		u.putSession(new InetSocketAddress("127.0.0.1",6789));
 		u.putSession(home);
 		count++;
 		return count;

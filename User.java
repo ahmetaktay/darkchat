@@ -3,8 +3,8 @@
  *  CS435: Final Project
  */
 
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -27,7 +27,7 @@ public class User {
 		this.sessions = sessionList;
 	}
 	
-	// session magic
+	// session get & put
 	public void putSession(Session session)
 	{
 		this.sessions.put(session.address, session);
@@ -47,6 +47,13 @@ public class User {
 	public Session getSession(InetSocketAddress inetSocketAddress)
 	{
 		return sessions.get(inetSocketAddress);
+	}
+	
+	// session pruning
+	public void pruneSessions(int minToKeep, Date pruneTreshold, int maxToKeep){
+//		Iterator<Session> iterator = sessions.values().iterator();
+		
+		
 	}
 	
 } // end of class

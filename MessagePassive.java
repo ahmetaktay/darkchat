@@ -25,6 +25,7 @@ public class MessagePassive {
 	public Boolean declareOnline(User toUser) throws Exception {
 		return declareOnline(localUser, toUser, true);
 	}
+
   public Boolean declareOnline(User toUser, boolean init) throws Exception {
 		return declareOnline(localUser, toUser, init);
 	}
@@ -32,10 +33,8 @@ public class MessagePassive {
     return declareOnline(fromUser, toUser, true);
   }
 	public Boolean declareOnline(User fromUser, User toUser, boolean init) throws Exception {
-		Collection<Session> sessionCollection = toUser.sessions.values();
-		Iterator<Session> sessions = sessionCollection.iterator();
-		while (sessions.hasNext()) {
-			Session session = sessions.next();
+		
+		for (Session session : toUser.sessions.values()) {
 			try {
         MyUtils.dPrintLine( String.format("'%s' attempts to notify '%s'", fromUser.name, toUser.name) );
         //Create an output stream
