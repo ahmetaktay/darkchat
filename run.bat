@@ -1,1 +1,1 @@
-java -cp ".;sqlitejdbc-v056.jar" Client -u Nathan
+java -cp ".;sqlitejdbc-v056.jar" Client -u nathan
