@@ -60,6 +60,7 @@ public class UserList {
 		u.putSession(new InetSocketAddress("128.36.156.46",6789), false);
 		//u.putSession(home);
 		count++;
+		u.meetUser("ahmet");
 		return count;
 	}
 	
