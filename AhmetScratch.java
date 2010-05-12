@@ -31,7 +31,5 @@ public class AhmetScratch
 	System.out.println(s2.compareTo(s1));
 	u.pruneSessions(0,MyUtils.nowPlusSeconds(-5),5);
 	u.pruneSessions(0,MyUtils.nowPlusSeconds(-5),5);
-
-	
 	}
 }

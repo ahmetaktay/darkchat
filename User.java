@@ -15,6 +15,8 @@ import java.util.List;
 public class User {
 	public String name;
 	public HashMap<InetSocketAddress,Session> sessions;
+	public Boolean definitelyOnline = false;
+	public Boolean definitelyOffline = false;
 	
 	public User()
 	{
@@ -28,6 +30,27 @@ public class User {
 	{
 		this.name = userName;
 		this.sessions = sessionList;
+	}
+	
+	// online offline
+	public Boolean isOnline()
+	{
+		if (definitelyOffline)
+		{
+			return false;
+		}
+		else
+		{
+			return hasOnlineSession();
+		}
+	}
+	public Boolean hasOnlineSession()
+	{
+		Boolean online = false;
+		for (Session session : sessions.values()) {
+			online = online && session.online;
+		}
+		return online;
 	}
 	
 	// session get & put
