@@ -4,9 +4,12 @@
  */
 
 import java.net.InetSocketAddress;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List; 
 
 public class User {
 	public String name;
@@ -49,11 +52,29 @@ public class User {
 		return sessions.get(inetSocketAddress);
 	}
 	
+	// session modify
+	public void updateSession(InetSocketAddress inetSocketAddress, Boolean online)
+	{
+		Session session = getSession(inetSocketAddress);
+		session.online = online;
+	}
+	public void updateSession(InetSocketAddress inetSocketAddress, Date lastValid)
+	{
+		Session session = getSession(inetSocketAddress);
+		session.lastValid = lastValid;
+	}
+	
 	// session pruning
-	public void pruneSessions(int minToKeep, Date pruneTreshold, int maxToKeep){
-//		Iterator<Session> iterator = sessions.values().iterator();
-		
-		
+	public void pruneSessions(int minToKeep, Date pruneTreshold, int maxToKeep)
+	{
+		ArrayList<Session> sessionsList = new ArrayList<Session>(sessions.values());
+		Collections.sort(sessionsList);
+		int keptCounter = 0;
+		MyUtils.dPrintLine(name);
+		for (int i = 0; i < sessionsList.size(); i++)
+		{
+			MyUtils.dPrintLine(sessionsList.get(i).lastValid.toString());
+		}
 	}
 	
 } // end of class
