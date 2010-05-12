@@ -51,6 +51,14 @@ public class Message {
     MyUtils.dPrintLine( String.format("'%s' attempts to notify '%s' of offline state", fromUser.name, toUser.name) );
     return contactUser(toUser,message);
   }
+  public Boolean declareOffline(UserList knownUsers) throws Exception {
+    for (User user : knownUsers.userHash.values()) {
+      if (user.isOnline()) {
+        declareOffline(user);
+      }
+    }
+    return true;
+  }
   
   public Boolean requestUserList(User toUser) throws Exception { //request your own list
     return requestUserList(localUser, toUser);
@@ -62,6 +70,7 @@ public class Message {
   }
   
   public Boolean contactUser(User toUser, String message) throws Exception{
+    boolean contacted = false;
     for (Session session : toUser.sessions.values()) {
       if (session.online) {
         try {
@@ -78,6 +87,7 @@ public class Message {
           socketOut.close();
           
           session.lastValid = new Date();
+          contacted = true;
         }
         catch (ConnectException e) {
           //connection refused
@@ -87,7 +97,7 @@ public class Message {
       }
     }
     //TODO: only return true if at least one session did not fail.
-    return true;
+    return contacted;
   }
   
   private DataOutputStream streamOut(Socket socketOut) throws Exception {

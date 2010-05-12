@@ -11,7 +11,7 @@ public class Client {
     // Defaults:
     int localPort = 6789;
     int nthreads = 5;
-    String username = "ahmet";
+    String username = "";
     
     //Iterate through args
     for (int i = 0; i < args.length; i++) {
@@ -32,14 +32,32 @@ public class Client {
         return;
       }
     }
+    while (username.equals("")) {
+      System.out.printf("Please specify a username: ");
+      java.io.BufferedReader stdin = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
+      username = stdin.readLine();
+    }
+    
+    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    System.out.println("| Welcome to DarkChat");
+    System.out.println("| By Ahmet Aktay and Nathan Griffith");
+    System.out.println("|");
+    System.out.println(String.format("| Username: '%s'",username));
+    System.out.println(String.format("| Listening on port: %s",localPort));
+    System.out.println("| Enter \"\\help\" for assistance.");
+    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+
   
     //Set-up the essentials
     Database db = new Database();
-    InetSocketAddress home = new InetSocketAddress("localhost",localPort);
     UserList knownUsers = new UserList(); // replace this with load from db.
-    UserList knownServers = new UserList();
-    knownServers.loadServers;
+    User server = hardcodedServer();
+    //Set-up the user
+    InetSocketAddress home = new InetSocketAddress("localhost",localPort);
     User me = knownUsers.get(username);
+		me.putSession(home); //my first session is localhost
+    
+    //Set-up the messager object
     Message passiveMessager = new Message(me,localPort);
     
     //Start the listener thread
@@ -48,9 +66,9 @@ public class Client {
 
     knownUsers.seed();
     
-    User ahmet = knownUsers.get("ahmet");
-    passiveMessager.declareOnline(ahmet);
-    
+    for (User user : knownUsers.userHash.values()) {
+      passiveMessager.declareOnline(user);
+    }
     //Start the "active" chat thread
     Thread active = new Thread(new Interface(me,localPort,knownUsers, passiveMessager),"Interface #1");
     active.start();
@@ -59,6 +77,14 @@ public class Client {
       Thread.sleep(100);
     }
     System.exit(0);
+  }
+  
+  public static User hardcodedServer()
+  {
+      User u = new User("server");
+      // for more servers, add to session here
+      u.putSession(new InetSocketAddress("128.36.171.168",7890)); // ahmet's server config
+      return u;
   }
   
 } // end of class

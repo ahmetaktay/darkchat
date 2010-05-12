@@ -42,7 +42,7 @@ public class User {
 	{
 		Boolean online = false;
 		for (Session session : sessions.values()) {
-			online = online && session.online;
+			online = online || session.online;
 		}
 		return online;
 	}
