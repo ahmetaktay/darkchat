@@ -21,6 +21,7 @@ public class UserList {
 		if ((user==null) && !getOnly) {
 			user = new User(name);
 			put(user);
+			user.meetUser(user);
 		}
 		return user;
 	}
@@ -72,6 +73,9 @@ public class UserList {
 //		//u.putSession(home);
 //		count++;
 //		u.meetUser(get("ahmet"));
+		User ahmet = get("ahmet");
+		ahmet.meetUser(ahmet);
+		
 		User tick = get("tick");
 		//tick.putSession(new InetSocketAddress("tick.zoo.cs.yale.edu",6789));
 		User python = get("python");

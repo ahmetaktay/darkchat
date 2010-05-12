@@ -62,8 +62,8 @@ class Responder implements Runnable {
           synchronized (knownUsers) {
             fromUser = knownUsers.get(ln,true); //only get if exists
           }
-          synchronized (fromUser) {
-            if (fromUser != null) {
+          if (fromUser != null) {
+            synchronized (fromUser) {
               fromUser.putSession(new InetSocketAddress(socket.getInetAddress(),port));
               if (!fromUser.name.equals(pm.localUser.name)) {
                 System.out.println(String.format("'%s' is online", fromUser.name));
@@ -80,7 +80,7 @@ class Responder implements Runnable {
           String fromUserName = inFromClient.readLine();
           int portIn = Integer.parseInt(inFromClient.readLine());
           String ofUserName = inFromClient.readLine();
-          String message = String.format("RU2\n%s\n%s\n%s\n%s\n",fromUserName,socket.getInetAddress(),portIn,ofUserName);
+          String message = String.format("RU2\n%s\n%s\n%s\n%s\n",fromUserName,socket.getInetAddress().getHostName(),portIn,ofUserName);
           User ofUser;
           synchronized (knownUsers) {
             ofUser = knownUsers.get(ofUserName,true); //only get if exists
@@ -149,7 +149,7 @@ class Responder implements Runnable {
             }
             else {
               MyUtils.dPrintLine("Recieved chat from unknown user:");
-              MyUtils.dPrintLine(String.format("%s: %s", fromUser.name,ln));
+              MyUtils.dPrintLine(String.format("%s: %s", fromUsername,ln));
             }
           }
         }
@@ -165,13 +165,13 @@ class Responder implements Runnable {
           if (fromUser == null)
           {
             MyUtils.dPrintLine("Recieved knowns REQuest from unknown user:");
-            MyUtils.dPrintLine(String.format("%s: %s", fromUser.name,ln));
+            MyUtils.dPrintLine(String.format("%s: %s", fromUserName,ln));
             // do not respond
           }
           else if (ofUser == null)
           {
             MyUtils.dPrintLine("Recieved knowns REQuest of unknown user:");
-            MyUtils.dPrintLine(String.format("%s: %s", ofUser.name,ln));
+            MyUtils.dPrintLine(String.format("%s: %s", ofUserName,ln));
             pm.deliverFakeKnownList(ofUserName, fromUser);
           }
           else if (!fromUser.knowUser(ofUser))

@@ -13,8 +13,8 @@ public class Client {
     // Defaults:
     int localPort = 6789;
     int nthreads = 5;
-    String serverIP = "128.36.171.168";
-    int serverPort = 7890;
+    String serverIP = "turtle.zoo.cs.yale.edu";
+    int serverPort = 8888;
     String username = "";
     boolean server_flag = false;
     
@@ -42,6 +42,7 @@ public class Client {
       }
       else if (args[i].equals("-s")) {
         server_flag = true;
+        username = "server";
       }
       else if (args[i].equals("-u")) { //server flag
         i++;
