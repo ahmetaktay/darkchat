@@ -11,7 +11,8 @@ public class Session implements Comparable<Session> {
 	public InetSocketAddress address;
 	public User user;
 	public Date lastValid;
-	public Boolean online;
+	public Boolean online = true;
+	public Boolean pruneFlag = false;
 	
 	Session(User user, String hostName, int port)
 	{

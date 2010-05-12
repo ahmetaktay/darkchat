@@ -5,6 +5,7 @@
 
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -65,17 +66,41 @@ public class User {
 	}
 	
 	// session pruning
-	public void pruneSessions(int minToKeep, Date pruneTreshold, int maxToKeep)
+	public void pruneSessions(){
+		Date d = MyUtils.nowPlusSeconds(60 * 60 * 1);
+		pruneSessions(5,d,10);	
+	}
+	public void pruneSessions(int minToKeep, Date tresholdDate , int maxToKeep)
 	{
 		ArrayList<Session> sessionsList = new ArrayList<Session>(sessions.values());
 		Collections.sort(sessionsList);
-		int keptCounter = 0;
+		int keptCounter = sessionsList.size();
 		MyUtils.dPrintLine(name);
-		for (int i = 0; i < sessionsList.size(); i++)
+		for (int i = 0; i < sessionsList.size() - minToKeep; i++)
 		{
-			MyUtils.dPrintLine(sessionsList.get(i).lastValid.toString());
+			Session session = sessionsList.get(i);
+			MyUtils.dPrintLine("considering "+session.lastValid.toString());
+			if ((!session.online) && (tresholdDate.after(session.lastValid) || (keptCounter > maxToKeep - minToKeep)))
+			{
+				session.pruneFlag = true;
+				MyUtils.dPrintLine("pruned "+session.lastValid.toString()+" was "+session.online.toString()+ " away.");
+			}
+			else
+			{
+				keptCounter++;
+			}
+		}
+		deletePrunedSessions();
+	}
+	public void deletePrunedSessions()
+	{
+		for (Session session : sessions.values()) {
+			if (session.pruneFlag) {
+//				sessions.remove(session.address);
+			}
 		}
 	}
+	
 	
 } // end of class
 
