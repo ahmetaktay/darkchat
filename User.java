@@ -15,8 +15,7 @@ import java.util.List;
 public class User {
 	public String name;
 	public HashMap<InetSocketAddress,Session> sessions;
-	public Boolean definitelyOnline = false;
-	public Boolean definitelyOffline = false;
+	public Boolean checked = false;
 	
 	public User()
 	{
@@ -35,14 +34,7 @@ public class User {
 	// online offline
 	public Boolean isOnline()
 	{
-		if (definitelyOffline)
-		{
-			return false;
-		}
-		else
-		{
 			return hasOnlineSession();
-		}
 	}
 	public Boolean hasOnlineSession()
 	{
