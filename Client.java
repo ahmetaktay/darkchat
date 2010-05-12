@@ -76,9 +76,9 @@ public class Client {
       passiveMessager.declareOnline(server);
       passiveMessager.requestUserList(server);
       synchronized (knownUsers) {
-	for (User user : knownUsers.userHash.values()) {
-        passiveMessager.declareOnline(user);
-      }
+        for (User user : knownUsers.userHash.values()) {
+          passiveMessager.declareOnline(user);
+        }
       }
     }
     //Start the "active" chat thread
