@@ -56,6 +56,7 @@ public class User {
 	{
 		knownUsers.put(user);
 		user.knownUsers.put(this);
+		MyUtils.dPrintLine(String.format("%s met %s",this,user));
 	}
 	public Boolean knowUser(String name)
 	{
