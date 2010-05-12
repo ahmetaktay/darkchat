@@ -21,6 +21,7 @@ public class UserList {
 		if ((user==null) && !getOnly) {
 			user = new User(name);
 			put(user);
+			user.meetUser(user);
 		}
 		return user;
 	}
