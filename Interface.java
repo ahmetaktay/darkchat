@@ -60,6 +60,7 @@ public class Interface implements Runnable {
           else if (elems[0].equals("\\add")&&(elems.length > 1)) {
             //here is where you would poll the server or your buddies to find the user
             User newUser = knownUsers.get(elems[1]);
+            fromUser.meetUser(newUser);
             System.out.println(String.format("Attempting to find user '%s'",newUser.name));
             //TODO: find user!
           }
