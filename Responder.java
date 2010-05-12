@@ -101,7 +101,7 @@ class Responder implements Runnable {
             fromUser = knownUsers.get(fromUserName,true); //only get if exists
           }
           if (fromUser != null) {
-            if (pm.localUser.name.equals(ofUserName))
+            if (!pm.localUser.name.equals(ofUserName))
               MyUtils.dPrintLine("Recieved update request for a different user");
             else {
               fromUser.putSession(new InetSocketAddress(ip,portIn));
