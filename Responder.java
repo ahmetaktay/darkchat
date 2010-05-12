@@ -140,10 +140,10 @@ class Responder implements Runnable {
                 MyUtils.dPrintLine(String.format("%s: %s", ofUser.name,ln));
                 pm.deliverFakeKnownList(ofUserName, fromUser);
             }
-            else if (!friends)
+            else if (!fromUser.knowUser(ofUser))
             {
                 MyUtils.dPrintLine("Recieved REQuest where users haven't met.");
-                MyUtils.dPrintLine(String.format("%s wanted %s's knowns but hadn't met them. delivering empty list"));
+                MyUtils.dPrintLine(String.format("%s wanted %s's knowns but hadn't met them. delivering empty list",fromUser.name,ofUser.name));
                 pm.deliverFakeKnownList(ofUserName, fromUser);
             }
             else
