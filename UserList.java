@@ -30,7 +30,7 @@ public class UserList {
 	
 	public int seed()
 	{
-		InetSocketAddress home = new InetSocketAddress("localhost",6789);
+		InetSocketAddress home = new InetSocketAddress("128.36.171.168",6789);
 		int count = 0;
 		User u = new User("ahmet");
 		userHash.put(u.name, u);
@@ -38,8 +38,8 @@ public class UserList {
 		count++;
 		u = new User("nathan");
 		userHash.put(u.name, u);
-		u.putSession(new InetSocketAddress("127.0.0.1",6789));
-		u.putSession(home);
+		u.putSession(new InetSocketAddress("127.0.0.1",679));
+//		u.putSession(home);
 		count++;
 		return count;
 	}
