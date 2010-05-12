@@ -125,9 +125,9 @@ class Responder implements Runnable {
             String ofUserName = inFromClient.readLine();
             Boolean friends = false;
             synchronized (knownUsers) {
-		fromUser = knownUsers.get(fromUserName,true);
-		ofUser 	 = knownUsers.get(ofUserName,true);
-	    }
+                fromUser = knownUsers.get(fromUserName,true);
+                ofUser          = knownUsers.get(ofUserName,true);
+            }
             if (fromUser == null)
             {
                 MyUtils.dPrintLine("Recieved knowns REQuest from unknown user:");
@@ -136,21 +136,21 @@ class Responder implements Runnable {
             }
             else if (ofUser == null)
             {
-        	MyUtils.dPrintLine("Recieved knowns REQuest of unknown user:");
-        	MyUtils.dPrintLine(String.format("%s: %s", ofUser.name,ln));
-        	pm.deliverFakeKnownList(ofUserName, fromUser);
+                MyUtils.dPrintLine("Recieved knowns REQuest of unknown user:");
+                MyUtils.dPrintLine(String.format("%s: %s", ofUser.name,ln));
+                pm.deliverFakeKnownList(ofUserName, fromUser);
             }
             else if (!friends)
             {
-        	MyUtils.dPrintLine("Recieved REQuest where users haven't met.");
-		MyUtils.dPrintLine(String.format("%s wanted %s's knowns but hadn't met them. delivering empty list"));
-        	pm.deliverFakeKnownList(ofUserName, fromUser);
+                MyUtils.dPrintLine("Recieved REQuest where users haven't met.");
+                MyUtils.dPrintLine(String.format("%s wanted %s's knowns but hadn't met them. delivering empty list"));
+                pm.deliverFakeKnownList(ofUserName, fromUser);
             }
             else
             {
-        	MyUtils.dPrintLine("Received valid REQuest where users have met.");
-        	MyUtils.dPrintLine(String.format("%s wanted %s's knowns, delivering them via BUD.", fromUser, ofUser));
-        	pm.deliverKnownList(ofUser, fromUser);
+                MyUtils.dPrintLine("Received valid REQuest where users have met.");
+                MyUtils.dPrintLine(String.format("%s wanted %s's knowns, delivering them via BUD.", fromUser, ofUser));
+                pm.deliverKnownList(ofUser, fromUser);
             }
             
         }
@@ -163,45 +163,45 @@ class Responder implements Runnable {
 //            port = Integer.parseInt(inFromClient.readLine());
 //            Boolean friends = false;
 //            synchronized (knownUsers) {
-//		fromUser = knownUsers.get(fromUserName,true);
-//		ofUser 	 = knownUsers.get(ofUserName,true);
-//	    }
+//                fromUser = knownUsers.get(fromUserName,true);
+//                ofUser          = knownUsers.get(ofUserName,true);
+//            }
             String fromUserName = inFromClient.readLine();
             port = Integer.parseInt(inFromClient.readLine());
             String ofUserName = inFromClient.readLine();
             synchronized (knownUsers) {
-		fromUser = knownUsers.get(fromUserName,true);
-		ofUser 	 = knownUsers.get(ofUserName,true);
-	    }
+                fromUser = knownUsers.get(fromUserName,true);
+                ofUser          = knownUsers.get(ofUserName,true);
+            }
             if (fromUser == null)
             {
                 MyUtils.dPrintLine("Recieved BUDs from unknown user:");
                 MyUtils.dPrintLine(String.format("%s: %s", fromUser.name,ln));
-	    }
+            }
             else if (ofUser == null)
             {
-        	MyUtils.dPrintLine("Recieved BUDs of unknown user:");
-        	MyUtils.dPrintLine(String.format("%s: %s", ofUser.name,ln));
+                MyUtils.dPrintLine("Recieved BUDs of unknown user:");
+                MyUtils.dPrintLine(String.format("%s: %s", ofUser.name,ln));
             }
             else
             {
-        	MyUtils.dPrintLine("Received valid BUDs");
-        	MyUtils.dPrintLine(String.format("%s sent %s's knowns, delivering them via BUD.", fromUser, ofUser));
-        	synchronized(ofUser)
-        	{
-        	    synchronized(knownUsers)
-        	    {
-        		String budName = inFromClient.readLine();
-        		while(budName != "")
-        		{	
-        		    User budUser = knownUsers.get(budName);
-        		    synchronized (budUser) {
-				ofUser.meetUser(budUser);
-			    }
-			}
-        		budName = inFromClient.readLine();
-        	    }
-        	}
+                MyUtils.dPrintLine("Received valid BUDs");
+                MyUtils.dPrintLine(String.format("%s sent %s's knowns, delivering them via BUD.", fromUser, ofUser));
+                synchronized(ofUser)
+                {
+                    synchronized(knownUsers)
+                    {
+                        String budName = inFromClient.readLine();
+                        while(budName != "")
+                        {        
+                            User budUser = knownUsers.get(budName);
+                            synchronized (budUser) {
+                                ofUser.meetUser(budUser);
+                            }
+                        }
+                        budName = inFromClient.readLine();
+                    }
+                }
             }
 
         }
