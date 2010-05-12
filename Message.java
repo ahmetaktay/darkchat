@@ -64,7 +64,7 @@ public class Message {
     return requestUserList(localUser, toUser);
   }
   public Boolean requestUserList(User ofUser, User toUser) throws Exception { //request someone elses
-    String message = String.format("REQ\n%s\n%s\n%s\n\n",localUser.name,port,ofUser.name);
+    String message = String.format("REQ\n%s\n%s\n%s\n",localUser.name,port,ofUser.name);
     MyUtils.dPrintLine( String.format("'%s' requests known users of '%s' (from '%s')", localUser.name, ofUser.name, toUser.name) );
     return contactUser(toUser,message);
   }
@@ -81,7 +81,7 @@ public class Message {
     return contactUser(toUser, message);
   }
   public Boolean deliverFakeKnownList(String ofUserName, User toUser) throws Exception {
-      String message = String.format("BUD\n%s\n%s\n", localUser.name, port, ofUserName);
+      String message = String.format("BUD\n%s\n%s\n%s\n\n", localUser.name, port, ofUserName);
       MyUtils.dPrintLine( String.format("'%s' delivers fake empty known users of '%s' (to '%s')", localUser.name, ofUserName, toUser.name) );
       return contactUser(toUser, message);
   }
