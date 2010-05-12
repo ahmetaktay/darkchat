@@ -94,7 +94,7 @@ public class Client {
     if (!server_flag){
         passiveMessager.declareOnline(server);
         passiveMessager.requestUserList(server);
-        Thread.sleep(4000)
+        Thread.sleep(4000);
         synchronized (knownUsers) {
         for (User user : knownUsers.userHash.values()) {
           passiveMessager.requestPing(me, server, user);
