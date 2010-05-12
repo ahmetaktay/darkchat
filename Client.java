@@ -50,11 +50,16 @@ public class Client {
   
     //Set-up the essentials
     Database db = new Database();
-    UserList knownUsers = new UserList(); // replace this with load from db.
+    
+    // Load all previously known users.
+    UserList knownUsers = new UserList(); 
+    knownUsers.seed();
+    
     User server = hardcodedServer();
     //Set-up the user
     InetSocketAddress home = new InetSocketAddress("localhost",localPort);
     User me = knownUsers.get(username);
+    me.knownUsers = knownUsers;
 		me.putSession(home); //my first session is localhost
     
     //Set-up the messager object
@@ -64,7 +69,7 @@ public class Client {
     Thread listener = new Thread(new Listener(localPort,nthreads,knownUsers,passiveMessager),"Listener #1");
     listener.start();
 
-    knownUsers.seed();
+    
     
     for (User user : knownUsers.userHash.values()) {
       passiveMessager.declareOnline(user);

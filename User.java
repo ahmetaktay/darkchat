@@ -20,7 +20,7 @@ public class User {
 	
 	public User()
 	{
-		this("Anonymous");
+		this("unknown user");
 	}
 	public User(String userName)
 	{
