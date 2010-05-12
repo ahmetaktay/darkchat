@@ -57,7 +57,7 @@ public class UserList {
     System.out.printf(output);
   }
 	
-	public int seed(String myName)
+	public int seed()
 	{
 		int count = 0;
 //		User u = this.get("ahmet");
@@ -86,16 +86,28 @@ public class UserList {
 		python.meetUser(termite);
 		termite.meetUser(hornet);
 		hornet.meetUser(cobra);
-		// remembered sessions
-		if (myName.equals(termite.name))
-		{
-	    tick.putSession(new InetSocketAddress("tick.zoo.cs.yale.edu",6789));
-	    python.putSession(new InetSocketAddress("python.zoo.cs.yale.edu",6789));
-		}
-		
 
 		return count;
 	}
+	
+	public void clientSeed(String name)
+	{
+	   // remembered sessions
+    if (name.equals("termite"))
+    {
+      User tick = get("tick");
+      User python = get("python");
+      User termite = get("termite");
+      User hornet = get("hornet");
+      tick.meetUser(termite);
+      python.meetUser(termite);
+      termite.meetUser(hornet);
+      tick.putSession(new InetSocketAddress("tick.zoo.cs.yale.edu",6789));
+      python.putSession(new InetSocketAddress("python.zoo.cs.yale.edu",6789));
+    }
+	}
+	
+	
 	
 	public UserList loadFromDatabase(){
 		UserList userList = new UserList(); // haha faked it there is no db yet

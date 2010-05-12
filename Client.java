@@ -92,6 +92,7 @@ public class Client {
     
     
     if (!server_flag){
+      knownUsers.clientSeed(me.name);
       synchronized (knownUsers) {
         for (User user : knownUsers.userHash.values()) {
           passiveMessager.declareOnline(user);
@@ -106,9 +107,14 @@ public class Client {
           MyUtils.dPrintLine(String.format("%s pinging %s via %s",me.name, user.name,server.name));
         }
       }
+        synchronized (knownUsers) {
+          for (User user : knownUsers.userHash.values()) {
+            passiveMessager.declareOnline(user);
+          }
+        }
     }
     else {
-      knownUsers.seed(me.name); //if it is a server, seed it with graph data
+      knownUsers.seed(); //if it is a server, seed it with graph data
     }
     //Start the "active" chat thread
     Thread active = new Thread(new Interface(me,localPort,knownUsers, passiveMessager),"Interface #1");
