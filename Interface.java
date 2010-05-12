@@ -26,11 +26,7 @@ public class Interface implements Runnable {
     while (true) {
       try {
         java.io.BufferedReader stdin = new java.io.BufferedReader(new java.io.InputStreamReader(System.in));
-        String line = stdin.readLine();
-        
-        //Socket socketOut = new Socket(address.getHostName(), port);
-        //DataOutputStream out = streamOut(socketOut);
-        
+        String line = stdin.readLine();        
         
         if (line.charAt(0) == '\\') {
           String[] elems = line.split("\\s");
@@ -43,11 +39,26 @@ public class Interface implements Runnable {
               System.out.println("Unrecognized username");
           }
           else if (elems[0].equals("\\help")) {
-            System.out.println("I got nothin'");
+            System.out.println("Macro commmands:");
+            System.out.println("  \\help\n   -No explanation needed");
+            System.out.println("  \\chat <username>\n   -Switch to conversation with <username>");
+            System.out.println("  \\users\n   -See a list of KNOWN users (online or off)");
+            System.out.println("  \\online\n   -See a list of ONLINE users");
+            System.out.println("  \\add <username>\n   -Attempt to add username to list of known users");
+            System.out.println("  \\quit or \\exit\n   -Leave the program gracefully");
           }
           else if (elems[0].equals("\\quit")||elems[0].equals("\\exit")) {
             System.out.println("Quitting...");
             System.exit(0);
+          }
+          else if (elems[0].equals("\\add")) {
+            //here is where you would poll the server or your buddies to find the user
+            
+          }
+          else if ((elems[0].equals("\\users"))||(elems[0].equals("\\online"))) {
+            for (User user : knownUsers.userHash.values()) {
+              System.out.println(user.name);
+            }
           }
           else {
             System.out.println("Unrecognized macro! (\\help for help)");
@@ -59,7 +70,7 @@ public class Interface implements Runnable {
           }
           else {
             //construct
-            String message = String.format("CHT\n%s\n%s",fromUser.name,line);
+            String message = String.format("CHT\n%s\n%s\n%s\n%s",fromUser.name,toUser.name,port,line);
             if (m.contactUser(toUser,message))
               MyUtils.dPrintLine("Chat sent to "+toUser.name);
           }
