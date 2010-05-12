@@ -60,6 +60,9 @@ public class UserList {
 	{
 		int count = 0;
 		User u = this.get("ahmet");
+		u.meetUser("ben");
+		u.meetUser("harley");
+		u.meetUser("elaine");
 		u.putSession(new InetSocketAddress("128.36.171.168",6789), false);
 		count++;
 		u = this.get("nathan");
