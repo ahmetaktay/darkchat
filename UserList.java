@@ -40,9 +40,15 @@ public class UserList {
     for (User user : this.userHash.values()) {
       if (((state == 0)||(state == 3))&&(!user.isOnline())) {
         output += String.format(" -%s\n",user.name);
+        if (MyUtils.debugFlag)
+          for (Session s : user.sessions.values())
+            output+= String.format("= %s:%s\n",s.address.getHostName(),s.address.getPort());
       }
       else if (((state == 1)||(state == 3))&&user.isOnline()) {
         output += String.format(" +%s\n",user.name);
+        if (MyUtils.debugFlag)
+          for (Session s : user.sessions.values())
+            output+= String.format("= %s:%s\n",s.address.getHostName(),s.address.getPort());
       }
     }
     if (output.equals(""))

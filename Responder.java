@@ -52,7 +52,7 @@ class Responder implements Runnable {
         
         int port = socket.getPort();
         if (ln.equals("ONL")) //fromUser is online
-        { 
+        {
           ln = inFromClient.readLine();
           port = Integer.parseInt(inFromClient.readLine());
           String state = inFromClient.readLine();
