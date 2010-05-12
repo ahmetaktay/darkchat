@@ -93,11 +93,14 @@ public class User {
 	}
 	public void deletePrunedSessions()
 	{
+		HashMap<InetSocketAddress,Session> keptSessions = new HashMap<InetSocketAddress,Session>();
+		
 		for (Session session : sessions.values()) {
-			if (session.pruneFlag) {
-//				sessions.remove(session.address);
+			if (!session.pruneFlag) {
+				keptSessions.put(session.address,session);
 			}
 		}
+		sessions = keptSessions;
 	}
 	
 	

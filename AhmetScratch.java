@@ -30,7 +30,7 @@ public class AhmetScratch
 	System.out.println(s1.compareTo(s1));
 	System.out.println(s2.compareTo(s1));
 	u.pruneSessions(0,MyUtils.nowPlusSeconds(-5),5);
-	MyUtils.dPrintLine(u.getSession(new InetSocketAddress("localhost",6789)).pruneFlag.toString());
+	u.pruneSessions(0,MyUtils.nowPlusSeconds(-5),5);
 
 	
 	}
