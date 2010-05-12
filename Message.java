@@ -69,6 +69,7 @@ public class Message {
         }
       }
     }
+    //TODO: only return true if at least one session did not fail.
     return true;
   }
   

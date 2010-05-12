@@ -36,7 +36,7 @@ public class Client {
     //Set-up the essentials
     Database db = new Database();
     InetSocketAddress home = new InetSocketAddress("localhost",localPort);
-		UserList knownUsers = new UserList(); // replace this with load from db.
+    UserList knownUsers = new UserList(); // replace this with load from db.
     User me = knownUsers.get(username);
     Message passiveMessager = new Message(me,localPort);
     
@@ -44,9 +44,9 @@ public class Client {
     Thread listener = new Thread(new Listener(localPort,nthreads,knownUsers,passiveMessager),"Listener #1");
     listener.start();
 
-		knownUsers.seed();
+    knownUsers.seed();
 		
-		User nathan = knownUsers.get("nathan");
+    User nathan = knownUsers.get("nathan");
     passiveMessager.declareOnline(nathan);
     
     //Start the "active" chat thread
