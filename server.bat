@@ -1,0 +1,1 @@
+java Client -u server -p 8888 -s
