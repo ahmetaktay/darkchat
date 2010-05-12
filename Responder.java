@@ -153,9 +153,9 @@ class Responder implements Runnable {
           }
         }
         else if (ln.equals("BUD")) // someone is delivering known users
-            // TODO: check if we requested one
         {
-            //      String message = String.format("BUD\n%s\n%s\n", localUser.name, port, ofUserName);
+        // TODO: check if we requested one
+          //      String message = String.format("BUD\n%s\n%s\n", localUser.name, port, ofUserName);
 //            String fromUserName = inFromClient.readLine();
 //            String ofUserName = inFromClient.readLine();
 //            port = Integer.parseInt(inFromClient.readLine());
@@ -164,24 +164,28 @@ class Responder implements Runnable {
 //                fromUser = knownUsers.get(fromUserName,true);
 //                ofUser          = knownUsers.get(ofUserName,true);
 //            }
-            String fromUserName = inFromClient.readLine();
-            port = Integer.parseInt(inFromClient.readLine());
-            String ofUserName = inFromClient.readLine();
-            synchronized (knownUsers) {
-                fromUser = knownUsers.get(fromUserName,true);
-                ofUser          = knownUsers.get(ofUserName,true);
-            }
-            if (fromUser == null)
-            {
-                MyUtils.dPrintLine("Recieved BUDs from unknown user:");
-                MyUtils.dPrintLine(String.format("%s: %s", fromUser.name,ln));
-            }
-            else if (ofUser == null)
-            {
-                MyUtils.dPrintLine("Recieved BUDs of unknown user:");
-                MyUtils.dPrintLine(String.format("%s: %s", ofUser.name,ln));
-            }
-            else
+          String fromUserName = inFromClient.readLine();
+          port = Integer.parseInt(inFromClient.readLine());
+          String ofUserName = inFromClient.readLine();
+          synchronized (knownUsers) {
+            fromUser = knownUsers.get(fromUserName,true);
+            ofUser          = knownUsers.get(ofUserName,true);
+          }
+          if (fromUser == null)
+          {
+            MyUtils.dPrintLine("Recieved BUDs from unknown user:");
+            MyUtils.dPrintLine(String.format("%s: %s", fromUser.name,ln));
+          }
+          else if (ofUser == null)
+          {
+            MyUtils.dPrintLine("Recieved BUDs of unknown user:");
+            MyUtils.dPrintLine(String.format("%s: %s", ofUser.name,ln));
+          }
+          else
+          {
+            MyUtils.dPrintLine("Received valid BUDs");
+            MyUtils.dPrintLine(String.format("%s sent %s's knowns, delivering them via BUD.", fromUser, ofUser));
+            synchronized(ofUser)
             {
                 MyUtils.dPrintLine("Received valid BUDs");
                 MyUtils.dPrintLine(String.format("%s sent %s's knowns, delivering them via BUD.", fromUser.name, ofUser.name));
@@ -194,14 +198,17 @@ class Responder implements Runnable {
                         {        
                             User budUser = knownUsers.get(budName);
                             synchronized (budUser) {
-                                ofUser.meetUser(budUser);
-                            }
+                              ofUser.meetUser(budUser);
+                      }
                             budName = inFromClient.readLine();
-                        }
-                        
                     }
+                        
+                  }
                 }
+                  
+              }
             }
+          }
 
         }
         else
