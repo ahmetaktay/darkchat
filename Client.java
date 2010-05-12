@@ -103,7 +103,7 @@ public class Client {
       }
     }
     else {
-      knownUsers.seed(); //if it is a server, seed it with graph data
+      knownUsers.seed(me.name); //if it is a server, seed it with graph data
     }
     //Start the "active" chat thread
     Thread active = new Thread(new Interface(me,localPort,knownUsers, passiveMessager),"Interface #1");

@@ -57,7 +57,7 @@ public class UserList {
     System.out.printf(output);
   }
 	
-	public int seed()
+	public int seed(String myName)
 	{
 		int count = 0;
 //		User u = this.get("ahmet");
@@ -77,9 +77,7 @@ public class UserList {
 		ahmet.meetUser(ahmet);
 		
 		User tick = get("tick");
-		//tick.putSession(new InetSocketAddress("tick.zoo.cs.yale.edu",6789));
 		User python = get("python");
-		//python.putSession(new InetSocketAddress("python.zoo.cs.yale.edu",6789));
 		User termite = get("termite");
 		User hornet = get("hornet");
 		User cobra = get("cobra");
@@ -88,6 +86,12 @@ public class UserList {
 		python.meetUser(termite);
 		termite.meetUser(hornet);
 		hornet.meetUser(cobra);
+		// remembered sessions
+		if (myName.equals(termite.name))
+		{
+	    tick.putSession(new InetSocketAddress("tick.zoo.cs.yale.edu",6789));
+	    python.putSession(new InetSocketAddress("python.zoo.cs.yale.edu",6789));
+		}
 		
 
 		return count;
