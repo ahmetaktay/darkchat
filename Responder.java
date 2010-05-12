@@ -80,7 +80,7 @@ class Responder implements Runnable {
           String fromUserName = inFromClient.readLine();
           int portIn = Integer.parseInt(inFromClient.readLine());
           String ofUserName = inFromClient.readLine();
-          String message = String.format("RU2\n%s\n%s\n%s\n%s\n",fromUserName,socket.getInetAddress(),portIn,ofUserName);
+          String message = String.format("RU2\n%s\n%s\n%s\n%s\n",fromUserName,socket.getInetAddress().getHostName(),portIn,ofUserName);
           User ofUser;
           synchronized (knownUsers) {
             ofUser = knownUsers.get(ofUserName,true); //only get if exists
