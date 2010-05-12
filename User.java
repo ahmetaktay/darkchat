@@ -16,6 +16,7 @@ public class User {
 	public String name;
 	public HashMap<InetSocketAddress,Session> sessions;
 	public Boolean checked = false;
+	public UserList knownUsers;
 	
 	public User()
 	{
@@ -29,6 +30,7 @@ public class User {
 	{
 		this.name = userName;
 		this.sessions = sessionList;
+		this.knownUsers = new UserList();
 	}
 	
 	// online offline
@@ -43,6 +45,25 @@ public class User {
 			online = online && session.online;
 		}
 		return online;
+	}
+	
+	// known users
+	public void meetUser(String name)
+	{
+		meetUser(knownUsers.get(name));
+	}
+	public void meetUser(User user)
+	{
+		knownUsers.put(user);
+		user.knownUsers.put(this);
+	}
+	public Boolean knowUser(String name)
+	{
+		return knownUsers.get(name, true) == null;
+	}
+	public Boolean knowUser(User user)
+	{
+		return knowUser(user.name);
 	}
 	
 	// session get & put
