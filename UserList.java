@@ -32,12 +32,16 @@ public class UserList {
     print(false);
   }
   public void print(boolean online) {
+    int state = (online == true) ? 1 : 0;
+    print(state);
+  }
+  public void print(int state) {
     String output = "";
     for (User user : this.userHash.values()) {
-      if ((!online)&&(!user.isOnline())) {
+      if (((state == 0)||(state == 3))&&(!user.isOnline())) {
         output += String.format(" -%s\n",user.name);
       }
-      else if (user.isOnline()) {
+      else if (((state == 1)||(state == 3))&&user.isOnline()) {
         output += String.format(" +%s\n",user.name);
       }
     }
@@ -50,10 +54,10 @@ public class UserList {
 	{
 		int count = 0;
 		User u = this.get("ahmet");
-		u.putSession(new InetSocketAddress("128.36.171.168",6789));
+		u.putSession(new InetSocketAddress("128.36.171.168",6789), false);
 		count++;
 		u = this.get("nathan");
-		u.putSession(new InetSocketAddress("128.36.156.46",6789));
+		u.putSession(new InetSocketAddress("128.36.156.46",6789), false);
 		//u.putSession(home);
 		count++;
 		return count;

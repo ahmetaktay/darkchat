@@ -43,7 +43,8 @@ public class Interface implements Runnable {
             System.out.println("  \\help\n   -No explanation needed");
             System.out.println("  \\chat <username>\n   -Switch to conversation with <username>");
             System.out.println("  \\users\n   -See a list of KNOWN users (online or off)");
-            System.out.println("  \\online\n   -See a list of ONLINE users");
+            System.out.println("  \\online\n   -See a list of known, ONLINE users");
+            System.out.println("  \\offline\n   -See a list of known, OFFLINE users");
             System.out.println("  \\add <username>\n   -Attempt to add username to list of known users");
             System.out.println("  \\ping <ip> <port>\n  -Attempt to ping the ip at the given port\n  -If no port is specified, the current instance's incoming will be used");
             System.out.println("  \\quit or \\exit\n   -Leave the program gracefully");
@@ -65,9 +66,16 @@ public class Interface implements Runnable {
             int port_ = port;
             if (elems.length > 2)
               port_ = Integer.parseInt(elems[2]);
+            User pingUser = new User("unknown user");
+            InetSocketAddress addr = new InetSocketAddress(ip,port);
+            pingUser.putSession(addr);
+            m.declareOnline(pingUser);
           }
-          else if ((elems[0].equals("\\users"))||(elems[0].equals("\\online"))) {
+          else if ((elems[0].equals("\\offline"))||(elems[0].equals("\\online"))) {
             knownUsers.print(elems[0].equals("\\online"));
+          }
+          else if (elems[0].equals("\\users")) {
+            knownUsers.print(3);
           }
           else {
             System.out.println("Unrecognized macro! (\\help for help)");

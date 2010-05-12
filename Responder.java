@@ -56,7 +56,6 @@ class Responder implements Runnable {
           ln = inFromClient.readLine();
           port = Integer.parseInt(inFromClient.readLine());
           String state = inFromClient.readLine();
-          
 
           //DEAL WITH USER
           synchronized (knownUsers) {
@@ -66,12 +65,29 @@ class Responder implements Runnable {
             if (fromUser != null) {
               fromUser.putSession(new InetSocketAddress(socket.getInetAddress(),port));
               if (!fromUser.name.equals(pm.localUser.name)) {
-              System.out.println(String.format("'%s' is online", fromUser.name));
+                System.out.println(String.format("'%s' is online", fromUser.name));
                 if (state.equals("INIT")) {
                   synchronized (pm) {
                     pm.declareOnline(fromUser, false);
                   }
                 }
+              }
+            }
+          }
+        }
+        else if (ln.equals("OFL")) {
+          ln = inFromClient.readLine();
+          port = Integer.parseInt(inFromClient.readLine());
+
+          //DEAL WITH USER
+          synchronized (knownUsers) {
+            fromUser = knownUsers.get(ln,true); //only get if exists
+          }
+          synchronized (fromUser) {
+            if (fromUser != null) {
+              fromUser.putSession(new InetSocketAddress(socket.getInetAddress(),port));
+              if (!fromUser.name.equals(pm.localUser.name)) {
+                System.out.println(String.format("'%s' is offline", fromUser.name));
               }
             }
           }
