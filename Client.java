@@ -92,13 +92,26 @@ public class Client {
     
     
     if (!server_flag){
-      passiveMessager.declareOnline(server);
-      passiveMessager.requestUserList(server);
+      knownUsers.clientSeed(me.name);
       synchronized (knownUsers) {
         for (User user : knownUsers.userHash.values()) {
-          passiveMessager.requestPing(me, server, user);
+          passiveMessager.declareOnline(user);
         }
       }
+      passiveMessager.declareOnline(server);
+        passiveMessager.requestUserList(server);
+        Thread.sleep(4000);
+        synchronized (knownUsers) {
+        for (User user : knownUsers.userHash.values()) {
+          passiveMessager.requestPing(me, server, user);
+          MyUtils.dPrintLine(String.format("%s pinging %s via %s",me.name, user.name,server.name));
+        }
+      }
+        synchronized (knownUsers) {
+          for (User user : knownUsers.userHash.values()) {
+            passiveMessager.declareOnline(user);
+          }
+        }
     }
     else {
       knownUsers.seed(); //if it is a server, seed it with graph data

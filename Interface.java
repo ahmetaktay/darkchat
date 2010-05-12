@@ -48,6 +48,7 @@ public class Interface implements Runnable {
             System.out.println("  \\users\n   -See a list of KNOWN users (online or off)");
             System.out.println("  \\online\n   -See a list of known, ONLINE users");
             System.out.println("  \\offline\n   -See a list of known, OFFLINE users");
+            System.out.println("  \\explode\n  -Tell all your buddies to pass on information about you");
             System.out.println("  \\add <username>\n   -Attempt to add username to list of known users");
             System.out.println("  \\ping <ip> <port>\n  -Attempt to ping the ip at the given port\n  -If no port is specified, the current instance's incoming will be used");
             System.out.println("  \\quit or \\exit\n   -Leave the program gracefully");
@@ -60,8 +61,21 @@ public class Interface implements Runnable {
           else if (elems[0].equals("\\add")&&(elems.length > 1)) {
             //here is where you would poll the server or your buddies to find the user
             User newUser = knownUsers.get(elems[1]);
+            fromUser.meetUser(newUser);
             System.out.println(String.format("Attempting to find user '%s'",newUser.name));
             //TODO: find user!
+          }
+          else if (elems[0].equals("\\explode"))
+          {
+            synchronized (knownUsers)
+            {
+              for (User thruUser : knownUsers.userHash.values()) {
+                for (User targetUser : fromUser.knownUsers.userHash.values())
+                {
+                  m.requestPing(fromUser, thruUser, targetUser);
+                }
+              }
+            }
           }
           else if (elems[0].equals("\\ping")&&(elems.length > 1)) {
             //ping this IP, saying "I AM ONLINE" to see what happens!

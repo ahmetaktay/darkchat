@@ -77,9 +77,7 @@ public class UserList {
 		ahmet.meetUser(ahmet);
 		
 		User tick = get("tick");
-		//tick.putSession(new InetSocketAddress("tick.zoo.cs.yale.edu",6789));
 		User python = get("python");
-		//python.putSession(new InetSocketAddress("python.zoo.cs.yale.edu",6789));
 		User termite = get("termite");
 		User hornet = get("hornet");
 		User cobra = get("cobra");
@@ -88,10 +86,28 @@ public class UserList {
 		python.meetUser(termite);
 		termite.meetUser(hornet);
 		hornet.meetUser(cobra);
-		
 
 		return count;
 	}
+	
+	public void clientSeed(String name)
+	{
+	   // remembered sessions
+    if (name.equals("termite"))
+    {
+      User tick = get("tick");
+      User python = get("python");
+      User termite = get("termite");
+      User hornet = get("hornet");
+      tick.meetUser(termite);
+      python.meetUser(termite);
+      termite.meetUser(hornet);
+      tick.putSession(new InetSocketAddress("tick.zoo.cs.yale.edu",6789));
+      python.putSession(new InetSocketAddress("python.zoo.cs.yale.edu",6789));
+    }
+	}
+	
+	
 	
 	public UserList loadFromDatabase(){
 		UserList userList = new UserList(); // haha faked it there is no db yet
