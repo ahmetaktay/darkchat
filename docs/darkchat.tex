@@ -13,6 +13,7 @@
 \usepackage{fullpage}
 \usepackage[upright]{fourier}
 \usepackage{tkz-graph}
+\usetikzlibrary{arrows}
 
 
 \DefineVerbatimEnvironment{code}{Verbatim}{fontsize=\small}
@@ -21,9 +22,6 @@
 
 \begin{document}
 \maketitle % automatic title!
-
-
-
 
 \section{Abstract}
 
@@ -89,9 +87,37 @@ While the details of the `Chat' client is useful in understanding some aspects o
 
 Instead of picturing the network in terms of `users' and `buddies' and `servers,' as one might with some types of chat implementations, one can also see it very simply as an undirected graph composed of nodes and edges. Each node represents a `client,' and each edge represents a direct, two-way association between two clients.\footnote{In the context of `chat,' adjacent nodes might represent ``buddies,'' but it's important to think of them abstractly.}
 
+\begin{figure}
+  \caption{An example network configuration}
+  \begin{center}
+  \begin{tikzpicture}
+    \tikzstyle{VertexStyle}=[shape = circle, fill = white, minimum size = 20pt, text = black, draw]
+    \SetUpEdge[lw         = 1.5pt,
+                       color      = black,
+                     labelcolor = white,
+                      labeltext  = red,
+                      labelstyle = {sloped,draw,text=blue}]
+   \tikzstyle{EdgeStyle}=[bend left]
+   \Vertex[x=0, y=4]{G}
+   \Vertex[x=1, y=2]{A} 
+   \Vertex[x=3, y=5]{P}
+   \Vertex[x=4, y=2]{C}
+   \Vertex[x=6, y=3]{Q}
+   \Vertex[x=7, y=0]{E}
+   \Vertex[x=3, y=-1]{R}
+   \Edges(A,G,P,C)
+   \Edges(Q,E,R,C,A)
+   \Edges(P,G,C)  
+   \Edges(Q,C)
+  \end{tikzpicture}
+  \end{center}
+\end{figure}
+
+
 \subsection{The Status}
+
 prune sessions -- compromising between age and online status
-   
+
 \subsection{The Protocol}
 
 Clients make use of a limited number of message types to recieve the information they need.
