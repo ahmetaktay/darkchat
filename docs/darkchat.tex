@@ -111,8 +111,16 @@ Instead of picturing the network in terms of `users' and `buddies' and `servers,
    \Edges(Q,C)
   \end{tikzpicture}
   \end{center}
+\label{graph}
 \end{figure}
 
+As shown in {\bf Figure \ref{graph}}, a network graph might look like one or more clusterings of nodes\footnote{This could be particularly true in the case of a `chat' client.}. In the \emph{DarkChat} implementation, each node is required to keep track of all nodes that are within two edge traversals.
+
+When, for instance, a node is to add or update information about itself, it sends a notification to all nodes in its list of relevant nodes. This means that if, for instance, \emph{Node R} and \emph{Node E} have lost their connection to each other\footnote{This might happen if they have both changed IP addresses since their last communication}, they could rely on either \emph{Node C} or \emph{Node Q} to provide one of the required locations\footnote{Note that, of two nodes, only one need know the other's location in order for a connection to be established. In the case of \emph{E} and \emph{R}, as soon as \emph{Node E} sends a message to \emph{Node R}, the location of \emph{Node E} has been revealed.}.
+
+Notice that \emph{Node C} is directly paired with all but \emph{Node E}, and even then \emph{E} and \emph{C} are within two edge traversals. This is a good example of a node with \emph{server-like} capabilities for this netork graph. However, since \emph{C} is in fact a client, this is a good example of the ways in which a server-free graph can still maintain robust and redundant connections for sending and recieiving updates.
+
+THe final aspect of this graph worth noting is the fact that no server is shown. Presumably, all nodes would also be connected to some centralized server. However, under many normal conditions, this server would not be required. Only in cases where nodes are completely stranded would they \emph{need} to poll the server in order to maintain an accurate representation of their surrounding nodes. One such case might be if \emph{Node R} and \emph{Node E} are attempting to communicate with each other, and \emph{Node C} and \emph{Node Q} are both offline. As such, the more interconnected the clusters of nodes, the `healthier' the network.\footnote{This does not necessarily imply that the entire network is very interconnected, though this could also be the case. Instead, the `interconnectedness' implies only that many connections are shared within each cluster of nodes, of which there could be many.}
 
 \subsection{The Status}
 
