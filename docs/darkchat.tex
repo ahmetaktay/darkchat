@@ -13,6 +13,7 @@
 \usepackage{fullpage}
 \usepackage[upright]{fourier}
 \usepackage{tkz-graph}
+\usetikzlibrary{arrows}
 
 
 \DefineVerbatimEnvironment{code}{Verbatim}{fontsize=\small}
@@ -21,9 +22,6 @@
 
 \begin{document}
 \maketitle % automatic title!
-
-
-
 
 \section{Abstract}
 
@@ -69,10 +67,10 @@ Once the client has been started, a number of macros have been made available to
   \add <username>
    -Attempt to add username to list of known users
   \ping <ip> <port>
-  -Attempt to ping the ip at the given port
-  -If no port is specified, the current instance's incoming will be used
+    -Attempt to ping the ip at the given port
+    -If no port is specified, the current instance's incoming will be used
   \explode
-  -ask every adjacent node to notify every adjacent node that this user in online at this address.
+    -ask every adjacent node to notify every adjacent node that this user in online at this address.
   \quit or \exit
    -Leave the program gracefully
 \end{code}
@@ -85,7 +83,7 @@ To communicate with an online user, one need only use the `\textbackslash chat' 
 
 This accommodation of multiple sessions per user allows another form of robustness. All protocol messages, not just active chats have this property. That is, any transactions between an en user and another will be mirrored in any other nodes with the same user. Even if one node disconnects, the other can carry on the conversation, and more importantly, maintenance of the topology.
 
-As an expensive proof-of-concept of how the network could propagate detailed information about nodes using our serverless sustaining push scheme, the `\textbackslash explode' macro will push out and propagate an address declaration from the original node to all its adjacent nodes, \emp{via all short paths}. This will ensure that every node in that zone will have a significant (read: almost certain) chance at being sent the ping by the original node. With little optimization, the node could broadcast (vicariously) its declaration to a set of users within a short bounded distance without much unneeded redundancy. If each node has n links going out, notifying a sphere of nodes with distance ≤ 2, would notify n^2 users in O(n^2) time. The node would then get n^2 responses back, acquiring information about n^2 users. In general, network traversal becomes cheap as long as we focus on short-range clusters, which occur naturally in social communications, and also can reflect the physical hardware topology of the network (users in a cluster are more likely to be `stranded' in the same island in the event of network failure.) Hence streamlined versions of actions like `\textbackslash explode' can keep the topology regenerating without relying on the (potentially offline) central server.
+As an expensive proof-of-concept of how the network could propagate detailed information about nodes using our serverless sustaining push scheme, the `\textbackslash explode' macro will push out and propagate an address declaration from the original node to all its adjacent nodes, \emph{via all short paths}. This will ensure that every node in that zone will have a significant (read: almost certain) chance at being sent the ping by the original node. With little optimization, the node could broadcast (vicariously) its declaration to a set of users within a short bounded distance without much unneeded redundancy. If each node has n links going out, notifying a sphere of nodes with distance $\leq$ 2, would notify n$^2$ users in O(n$^2$) time. The node would then get n$^2$ responses back, acquiring information about n$^2$ users. In general, network traversal becomes cheap as long as we focus on short-range clusters, which occur naturally in social communications, and also can reflect the physical hardware topology of the network (users in a cluster are more likely to be `stranded' in the same island in the event of network failure.) Hence streamlined versions of actions like `\textbackslash explode' can keep the topology regenerating without relying on the (potentially offline) central server.
 
 \section{The Algorithm}
 
@@ -95,20 +93,56 @@ While the details of the `Chat' client is useful in understanding some aspects o
 
 Instead of picturing the network in terms of `users' and `buddies' and `servers,' as one might with some types of chat implementations, one can also see it very simply as an undirected graph composed of nodes and edges. Each node represents a `client,' and each edge represents a direct, two-way association between two clients.\footnote{In the context of `chat,' adjacent nodes might represent ``buddies,'' but it's important to think of them abstractly.}
 
+\begin{figure}
+  \caption{An example network configuration}
+  \begin{center}
+  \begin{tikzpicture}
+    \tikzstyle{VertexStyle}=[shape = circle, fill = white, minimum size = 20pt, text = black, draw]
+    \SetUpEdge[lw         = 1.5pt,
+                       color      = black,
+                     labelcolor = white,
+                      labeltext  = red,
+                      labelstyle = {sloped,draw,text=blue}]
+   \tikzstyle{EdgeStyle}=[bend left]
+   \Vertex[x=0, y=4]{G}
+   \Vertex[x=1, y=2]{A} 
+   \Vertex[x=3, y=5]{P}
+   \Vertex[x=4, y=2]{C}
+   \Vertex[x=6, y=3]{Q}
+   \Vertex[x=7, y=0]{E}
+   \Vertex[x=3, y=-1]{R}
+   \Edges(A,G,P,C)
+   \Edges(Q,E,R,C,A)
+   \Edges(P,G,C)  
+   \Edges(Q,C)
+  \end{tikzpicture}
+  \end{center}
+\label{graph}
+\end{figure}
+
+As shown in {\bf Figure \ref{graph}}, a network graph might look like one or more clusterings of nodes\footnote{This could be particularly true in the case of a `chat' client.}. In the \emph{DarkChat} implementation, each node is required to keep track of all nodes that are within two edge traversals.
+
+When, for instance, a node is to add or update information about itself, it sends a notification to all nodes in its list of relevant nodes. This means that if, for instance, \emph{Node R} and \emph{Node E} have lost their connection to each other\footnote{This might happen if they have both changed IP addresses since their last communication}, they could rely on either \emph{Node C} or \emph{Node Q} to provide one of the required locations\footnote{Note that, of two nodes, only one need know the other's location in order for a connection to be established. In the case of \emph{E} and \emph{R}, as soon as \emph{Node E} sends a message to \emph{Node R}, the location of \emph{Node E} has been revealed.}.
+
+Notice that \emph{Node C} is directly paired with all but \emph{Node E}, and even then \emph{E} and \emph{C} are within two edge traversals. This is a good example of a node with \emph{server-like} capabilities for this netork graph. However, since \emph{C} is in fact a client, this is a good example of the ways in which a server-free graph can still maintain robust and redundant connections for sending and recieiving updates.
+
+THe final aspect of this graph worth noting is the fact that no server is shown. Presumably, all nodes would also be connected to some centralized server. However, under many normal conditions, this server would not be required. Only in cases where nodes are completely stranded would they \emph{need} to poll the server in order to maintain an accurate representation of their surrounding nodes. One such case might be if \emph{Node R} and \emph{Node E} are attempting to communicate with each other, and \emph{Node C} and \emph{Node Q} are both offline. As such, the more interconnected the clusters of nodes, the `healthier' the network.\footnote{This does not necessarily imply that the entire network is very interconnected, though this could also be the case. Instead, the `interconnectedness' implies only that many connections are shared within each cluster of nodes, of which there could be many.}
+
 \subsection{The Status}
+
 While each node's online/offline status is stored at each linked node, even offline nodes are remembered in session variables and kept. Since most end-users use the same network connections consistently through time (static IP at home and work,) this information can be used to bootstrap the connectivity of the network without invoking the central server. A balance has to be struck between iterating through (potentially useless) old addresses for nodes when attempting to reach them, and pruning the oldest away to streamline the process. In this implementation, we prune the list of sessions on demand to a desired length, favoring online sessions (however many) over recent offline ones.
    
 \subsection{The Protocol}
 
 Clients make use of a limited number of message types to receive the information they need. The message sending and respond happens without state.
 
-\begin(code)
-    \emph{declareOnline} - sends a message to a specified user (all sessions thereof,) notifying it of its address and availability.
-    \emph{declareOffline} - declares to the specified user that it is going offline.
-    \emph{requestPing} - sends a user a request for it to deliver a \emph{declareOnline} message to a target. Helps restore missing links.
-    \emph{requestUserList} - asks a user to send it a list of who the originator of the request is linked to. Helps bootstrap the network.
-    \emph{deliverKnownList} - in response to a user list requests, sends back a list of users that it knows the requesting user is linked to. When processed by a server, the list is complete. Otherwise, multiple adjacent users might have to be polled to build out the set.
-\end(code)
+\begin{description}
+\item \emph{declareOnline} - sends a message to a specified user (all sessions thereof,) notifying it of its address and availability.
+\item \emph{declareOffline} - declares to the specified user that it is going offline.
+\item \emph{requestPing} - sends a user a request for it to deliver a \emph{declareOnline} message to a target. Helps restore missing links.
+\item \emph{requestUserList} - asks a user to send it a list of who the originator of the request is linked to. Helps bootstrap the network.
+\item \emph{deliverKnownList} - in response to a user list requests, sends back a list of users that it knows the requesting user is linked to. When processed by a server, the list is complete. Otherwise, multiple adjacent users might have to be polled to build out the set.
+\end{description}
 
 \section{Use Cases}
 
