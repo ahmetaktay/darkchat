@@ -1,4 +1,4 @@
-% Useful: http://docs.latexlab.org
+ % Useful: http://docs.latexlab.org
 
 \documentclass[11pt]{article}
 % used by \maketitle :
@@ -85,6 +85,8 @@ To communicate with an online user, one need only use the `\textbackslash chat' 
 
 This accommodation of multiple sessions per user allows another form of robustness. All protocol messages, not just active chats have this property. That is, any transactions between an en user and another will be mirrored in any other nodes with the same user. Even if one node disconnects, the other can carry on the conversation, and more importantly, maintenance of the topology.
 
+As an expensive proof-of-concept of how the network could propagate detailed information about nodes using our serverless sustaining push scheme, the `\textbackslash explode' macro will push out and propagate an address declaration from the original node to all its adjacent nodes, \emp{via all short paths}. This will ensure that every node in that zone will have a significant (read: almost certain) chance at being sent the ping by the original node. With little optimization, the node could broadcast (vicariously) its declaration to a set of users within a short bounded distance without much unneeded redundancy. If each node has n links going out, notifying a sphere of nodes with distance ≤ 2, would notify n^2 users in O(n^2) time. The node would then get n^2 responses back, acquiring information about n^2 users. In general, network traversal becomes cheap as long as we focus on short-range clusters, which occur naturally in social communications, and also can reflect the physical hardware topology of the network (users in a cluster are more likely to be `stranded' in the same island in the event of network failure.) Hence streamlined versions of actions like `\explode' can keep the topology regenerating without relying on the (potentially offline) central server.
+
 \section{The Algorithm}
 
 While the details of the `Chat' client is useful in understanding some aspects of this algorithm, the true implementation has been abstracted from the end-user. Therefore, to understand the intent behind this project, a deeper explanation of the algorithm is required.
@@ -94,7 +96,7 @@ While the details of the `Chat' client is useful in understanding some aspects o
 Instead of picturing the network in terms of `users' and `buddies' and `servers,' as one might with some types of chat implementations, one can also see it very simply as an undirected graph composed of nodes and edges. Each node represents a `client,' and each edge represents a direct, two-way association between two clients.\footnote{In the context of `chat,' adjacent nodes might represent ``buddies,'' but it's important to think of them abstractly.}
 
 \subsection{The Status}
-prune sessions -- compromising between age and online status
+While each node's online/offline status is stored at each linked node, even offline nodes are remembered in session variables and kept. Since most end-users use the same network connections consistently through time (static IP at home and work,) this information can be used to bootstrap the connectivity of the network without invoking the central server. A balance has to be struck between iterating through (potentially useless) old addresses for nodes when attempting to reach them, and pruning the oldest away to streamline the process. In this implementation, we prune the list of sessions on demand to a desired length, favoring online sessions (however many) over recent offline ones.
    
 \subsection{The Protocol}
 
