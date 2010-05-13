@@ -100,9 +100,15 @@ While each node's online/offline status is stored at each linked node, even offl
    
 \subsection{The Protocol}
 
-Clients make use of a limited number of message types to receive the information they need.
+Clients make use of a limited number of message types to receive the information they need. The message sending and respond happens without state.
 
-
+\begin(code)
+    \emph{declareOnline} - sends a message to a specified user (all sessions thereof,) notifying it of its address and availability.
+    \emph{declareOffline} - declares to the specified user that it is going offline.
+    \emph{requestPing} - sends a user a request for it to deliver a \emph{declareOnline} message to a target. Helps restore missing links.
+    \emph{requestUserList} - asks a user to send it a list of who the originator of the request is linked to. Helps bootstrap the network.
+    \emph{deliverKnownList} - in response to a user list requests, sends back a list of users that it knows the requesting user is linked to. When processed by a server, the list is complete. Otherwise, multiple adjacent users might have to be polled to build out the set.
+\end(code)
 
 \section{Use Cases}
 
