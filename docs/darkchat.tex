@@ -25,12 +25,12 @@
 
 The purpose of this project is to create a protocol for clients on a network to function with very little dependence on a server. In the case of \emph{DarkChat}, the clients function as 'chat' clients. The clients are able to communicate with each other information such as `online'/`offline' state and lists of contacts, with little-to-no interaction with the server.
 
-While \emph{DarkChat} relies on a multi-threaded approach, and also makes no use of authentication, implementation decisions such as this have been made independently of the underlying protocol. As such, the protocal could be implemented in any number of ways, and this is meant as merely one example.
+While \emph{DarkChat} relies on a multi-threaded approach, and also makes no use of authentication, implementation decisions such as this have been made independently of the underlying protocol. As such, the protocol could be implemented in any number of ways, and this is meant as merely one example. The event-based stateless nature of the protocol makes an asynchronous IO implementation very lucrative in terms of resource utilization.
 
 \section{Clients and Servers}
 
-The `Client' class has been built as a wrapper for the messaging and interface classes, putting them all together into one usable chat client. Note that the term `client' is slightly misleading, as with the inclusion of a simple flag, a client can function as a server with very few implementation changes. It is possible that this could be reduced even further, such that servers could simply act as `super-clients' which store information about the entire netowrk, instead of about only their nearby edges and nodes.
-In either case, the only purpose of the sever is to act as a secondary or backup repository for storing information about the network. Once the network is fully operational, the server is not needed, as long as enough clients remain online that one cluster of edges does not become separated from any other.
+The `Client' class has been built as a wrapper for the messaging and interface classes, putting them all together into one usable chat client. Note that the term `client' is slightly misleading, as with the inclusion of a simple flag, a client can function as a server with very few implementation changes. It is possible that this could be reduced even further, such that servers could simply act as `super-clients' which store information about the entire network, instead of about only their nearby edges and nodes.
+In either case, the only purpose of the server is to act as a secondary or backup repository for storing information about the network. Once the network is fully operational, the server is not needed, as long as enough clients remain online that one cluster of edges does not become separated from any other. In other words, the server is a client that has been flagged as having access to greater bandwidth and resources, and can shoulder a bigger burden in maintaining network topology. It has no additional logic and hence is not a liability.
 
 \subsection{Usage: Parameters}
 
@@ -67,15 +67,19 @@ Once the client has been started, a number of macros have been made available to
   \ping <ip> <port>
   -Attempt to ping the ip at the given port
   -If no port is specified, the current instance's incoming will be used
+  \explode
+  -ask every adjacent node to notify every adjacent node that this user in online at this address.
   \quit or \exit
    -Leave the program gracefully
 \end{code}
 
-Note that these are made available before the client has necessarly made successful contact with a server, allowing one to use the `\textbackslash ping' macro to manually connect to another client or server.
+Note that these are made available before the client has necessarily made successful contact with a server, allowing one to use the `\textbackslash ping' macro to manually connect to another client or server, or begin chatting with users whose nodes are remembered from previous executions.
 
-Once a connection has been made, information about offline and online users should propogate across the network and to the client, at which point the macros `\textbackslash online', `\textbackslash offline', and `\textbackslash users' will provide useful information.
+Once a connection has been made, information about offline and online users should propagate across the network and to the client, at which point the macros `\textbackslash online', `\textbackslash offline', and `\textbackslash users' will provide useful information.
 
-To communcate with an online user, one need only use the `\textbackslash chat' macro (followed by the user's name) to start a new chat session with that user. From that point on, any line of text that is entered and doesn't start with a macro `\textbackslash' will be sent to \emph{all online sessons} associated with the reciever's username.\footnote{Currently there is no way to chat with \emph{only one} session if a user is logged into multiple.}
+To communicate with an online user, one need only use the `\textbackslash chat' macro (followed by the user's name) to start a new chat session with that user. From that point on, any line of text that is entered and doesn't start with a macro `\textbackslash' will be sent to \emph{all online sessions} associated with the receiver's username.\footnote{Currently there is no way to chat with \emph{only one} session if a user is logged into multiple.}
+
+This accommodation of multiple sessions per user allows another form of robustness. All protocol messages, not just active chats have this property. That is, any transactions between an en user and another will be mirrored in any other nodes with the same user. Even if one node disconnects, the other can carry on the conversation, and more importantly, maintenance of the topology.
 
 \section{The Algorithm}
 
@@ -90,7 +94,7 @@ prune sessions -- compromising between age and online status
    
 \subsection{The Protocol}
 
-Clients make use of a limited number of message types to recieve the information they need.
+Clients make use of a limited number of message types to receive the information they need.
 
 
 
@@ -101,7 +105,7 @@ NOT for high bandwidth cases -- if optimizing bandwidth is not as useful as incr
 Failsafes and backups -- gmail collapse -- the backups themselves are more of the 'same' -- failure mode is untested, anything causing original to go down causes backup.
 In this case, the failure mode is being tested every day.
 
-coordiation in case of an emergency
+coordination in case of an emergency
 
 \section{Possible Optimizations}
 scaling for bandwidth
