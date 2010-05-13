@@ -114,11 +114,9 @@ Clients make use of a limited number of message types to receive the information
 
 \emph{DarkChat} is NOT for high payload bandwidth, frequent-topology-shift-ridden networks. It saves bandwidth for the \emph{server} by distributing the traffic workload to the clients. We believe that in many real world cases, the payload is light enough and the added redundancy and synchronicity would be wroth enough that a fleshed out \emph{DarkChat} implementation would have advantages outweighing the disadvantages.
 
-\emph{DarkChat} has the useful property of defaulting to its failure mode \emph{even when the system is intact}. This is a significant advantage for systems that
-Failsafes and backups -- gmail collapse -- the backups themselves are more of the 'same' -- failure mode is untested, anything causing original to go down causes backup.
-In this case, the failure mode is being tested every day.
+\emph{DarkChat} has the useful property of running in its failure mode when possible \emph{even when the system is intact}. This creates a significant advantage for the protocol: Its failsafes, backups and system load are tested (and ideally refined) during regular uptime activity, hopefully shaping the robustness into a tested and true practicality rather than an abstract potential benefit.
 
-coordination in case of an emergency
+A hypothetical use case could be coordination amongst first responders in case of an emergency. The nodes that want to communicate will be physically close, and getting \emph{any} message through in any manner possible will be the only priority.
 
 \section{Possible Optimizations}
 scaling for bandwidth
