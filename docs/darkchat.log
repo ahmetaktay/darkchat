@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (MiKTeX 2.8) (preloaded format=pdflatex 2010.5.7)  12 MAY 2010 21:25
+This is pdfTeX, Version 3.1415926-1.40.10 (MiKTeX 2.8) (preloaded format=pdflatex 2010.5.7)  12 MAY 2010 21:40
 entering extended mode
 **C:/Users/Nathan/My*Dropbox/Yale/Spring*2010/CS*435/darkchat/docs/darkchat.tex
 
@@ -898,7 +898,9 @@ LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/futs/b/n' tried instead on input line 26.
 LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <12> not available
 (Font)              Font shape `T1/futs/b/n' tried instead on input line 37.
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 41.
+LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <10.95> not available
+(Font)              Font shape `T1/futs/b/n' tried instead on input line 39.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 43.
 
 ("C:\Program Files\MiKTeX 2.8\tex\latex\base\t1cmtt.fd"
 File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
@@ -906,32 +908,29 @@ File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 
 {C:/ProgramData/MiKTeX/2.8/pdftex/config/pdftex.map}]
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 10.07397pt on input line 82.
+(Font)              scaled to size 10.07397pt on input line 90.
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 7.63599pt on input line 82.
+(Font)              scaled to size 7.63599pt on input line 90.
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 5.51999pt on input line 82.
+(Font)              scaled to size 5.51999pt on input line 90.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 10.07397pt on input line 82.
+(Font)              scaled to size 10.07397pt on input line 90.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 7.63599pt on input line 82.
+(Font)              scaled to size 7.63599pt on input line 90.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 5.51999pt on input line 82.
+(Font)              scaled to size 5.51999pt on input line 90.
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 6.99199pt on input line 82.
+(Font)              scaled to size 6.99199pt on input line 90.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 6.99199pt on input line 82.
- [2]
-LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/futs/b/n' tried instead on input line 123.
- [3] [4] [5]
+(Font)              scaled to size 6.99199pt on input line 90.
+ [2] [3] [4] [5]
 ("C:\Users\Nathan\My Dropbox\Yale\Spring 2010\CS 435\darkchat\docs\darkchat.aux
 ") ) 
 Here is how much of TeX's memory you used:
- 9836 strings out of 495285
- 166895 string characters out of 3180392
- 217809 words of memory out of 3000000
- 12802 multiletter control sequences out of 15000+200000
+ 9839 strings out of 495285
+ 166921 string characters out of 3180392
+ 220833 words of memory out of 3000000
+ 12805 multiletter control sequences out of 15000+200000
  93758 words of font info for 91 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
  53i,8n,63p,1412b,804s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -941,7 +940,7 @@ Here is how much of TeX's memory you used:
  Files/MiKTeX 2.8/fonts/type1/adobe/utopia/putb8a.pfb><C:/Program Files/MiKTeX 
 2.8/fonts/type1/adobe/utopia/putr8a.pfb><C:/Program Files/MiKTeX 2.8/fonts/type
 1/adobe/utopia/putri8a.pfb>
-Output written on darkchat.pdf (5 pages, 87648 bytes).
+Output written on darkchat.pdf (5 pages, 88106 bytes).
 PDF statistics:
  90 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

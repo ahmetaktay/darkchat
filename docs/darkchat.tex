@@ -36,8 +36,10 @@ In either case, the only purpose of the server is to act as a secondary or backu
 
 \subsection{Usage: Parameters}
 
-When executing the client, a number of parameters can be passed. WIth the exception of `username' (`-u'), all parameters will revert to default values if none is specified:
+When executing the client, a number of parameters can be passed. WIth the exception of `username' (`-u'), all parameters will revert to default values if none is specified. (see {\bf Figure \ref{params}}.)
 
+\begin{figure}
+\caption{Parameters that can be passed to `client.'}
 \begin{code}
 -p [port number, for accepting incoming communication]
 -t [the default number of listening threads]
@@ -46,13 +48,16 @@ When executing the client, a number of parameters can be passed. WIth the except
 -sp [port number of known server]
 -s (server flag, specifying that this instance of DarkChat is a server)
 \end{code}
+\label{params}
+\end{figure}
 
 Note that there is currently no reliable centralized server, so in the actual case of starting a network running from scratch, it would be best to ensure that a server is running, and specify the server ip and port for each client. Once the clients are online and have contacted each other, one need only use a macro to contact a currently online client.
 
 \subsection{Usage: Macros}
 
-Once the client has been started, a number of macros have been made available to give the user control:
-
+Once the client has been started, a number of macros have been made available to give the user control. (See {\bf Figure \ref{macros}}.)
+\begin{figure}
+\caption{The list of available macros, listed when `\textbackslash help' is entered}
 \begin{code}
   \help
    -Display this dialog
@@ -67,13 +72,16 @@ Once the client has been started, a number of macros have been made available to
   \add <username>
    -Attempt to add username to list of known users
   \ping <ip> <port>
-    -Attempt to ping the ip at the given port
-    -If no port is specified, the current instance's incoming will be used
+   -Attempt to ping the ip at the given port
+   -If no port is specified, the current instance's incoming will be used
   \explode
-    -ask every adjacent node to notify every adjacent node that this user in online at this address.
+   -ask every adjacent node to notify every adjacent node that this user is 
+    online at this address.
   \quit or \exit
    -Leave the program gracefully
 \end{code}
+\label{macros}
+\end{figure}
 
 Note that these are made available before the client has necessarily made successful contact with a server, allowing one to use the `\textbackslash ping' macro to manually connect to another client or server, or begin chatting with users whose nodes are remembered from previous executions.
 
@@ -134,8 +142,10 @@ While each node's online/offline status is stored at each linked node, even offl
    
 \subsection{The Protocol}
 
-Clients make use of a limited number of message types to receive the information they need. The message sending and respond happens without state.
+Clients make use of a limited number of message types to receive the information they need. The message sending and respond happens without state. (See {\bf Figure \ref{protocol}} for the list of message types.)
 
+\begin{figure}
+\caption{The underlying message types available in this protocol.}
 \begin{description}
 \item \emph{declareOnline} - sends a message to a specified user (all sessions thereof,) notifying it of its address and availability.
 \item \emph{declareOffline} - declares to the specified user that it is going offline.
@@ -143,6 +153,8 @@ Clients make use of a limited number of message types to receive the information
 \item \emph{requestUserList} - asks a user to send it a list of who the originator of the request is linked to. Helps bootstrap the network.
 \item \emph{deliverKnownList} - in response to a user list requests, sends back a list of users that it knows the requesting user is linked to. When processed by a server, the list is complete. Otherwise, multiple adjacent users might have to be polled to build out the set.
 \end{description}
+\label{protocol}
+\end{figure}
 
 \section{Use Cases}
 
