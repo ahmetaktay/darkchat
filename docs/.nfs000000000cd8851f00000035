@@ -7,13 +7,9 @@
 \date{May 12, 2010}
 % used by \begin{code}:
 \usepackage{fancyvrb}
-
 \usepackage[utf8]{inputenc}
 \usepackage[usenames,dvipsnames]{xcolor}
-\usepackage{fullpage}
-\usepackage[upright]{fourier}
-\usepackage{tkz-graph}
-
+\usepackage{tkz-berge,fullpage}
 
 \DefineVerbatimEnvironment{code}{Verbatim}{fontsize=\small}
 \DefineVerbatimEnvironment{example}{Verbatim}{fontsize=\small}
