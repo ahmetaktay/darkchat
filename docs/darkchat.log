@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (MiKTeX 2.8) (preloaded format=pdflatex 2010.5.7)  12 MAY 2010 21:01
+This is pdfTeX, Version 3.1415926-1.40.10 (MiKTeX 2.8) (preloaded format=pdflatex 2010.5.7)  12 MAY 2010 21:14
 entering extended mode
 **C:/Users/Nathan/My*Dropbox/Yale/Spring*2010/CS*435/darkchat/docs/darkchat.tex
 
@@ -906,42 +906,50 @@ File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 
 {C:/ProgramData/MiKTeX/2.8/pdftex/config/pdftex.map}]
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 10.07397pt on input line 80.
+(Font)              scaled to size 10.07397pt on input line 82.
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 7.63599pt on input line 80.
+(Font)              scaled to size 7.63599pt on input line 82.
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 5.51999pt on input line 80.
+(Font)              scaled to size 5.51999pt on input line 82.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 10.07397pt on input line 80.
+(Font)              scaled to size 10.07397pt on input line 82.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 7.63599pt on input line 80.
+(Font)              scaled to size 7.63599pt on input line 82.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 5.51999pt on input line 80.
+(Font)              scaled to size 5.51999pt on input line 82.
 LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 6.99199pt on input line 80.
+(Font)              scaled to size 6.99199pt on input line 82.
 LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 6.99199pt on input line 80.
-LaTeX Font Info:    Font shape `T1/futs/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/futs/b/n' tried instead on input line 117.
- [2] [3] [4]
-("C:\Users\Nathan\My Dropbox\Yale\Spring 2010\CS 435\darkchat\docs\darkchat.aux
-") ) 
-Here is how much of TeX's memory you used:
- 9834 strings out of 495285
- 166874 string characters out of 3180392
- 218809 words of memory out of 3000000
- 12802 multiletter control sequences out of 15000+200000
- 93341 words of font info for 89 fonts, out of 3000000 for 9000
- 14 hyphenation exceptions out of 8191
- 53i,8n,63p,801b,804s stack positions out of 5000i,500n,10000p,200000b,50000s
- <C:\Users\Nathan\AppData\Local\MiKTeX\2.8\fonts\pk\ljfour\jknappen\ec\dpi6
-00\ectt1000.pk>{C:/Program Files/MiKTeX 2.8/fonts/enc/dvips/fontname/8r.enc}<C:
-/Program Files/MiKTeX 2.8/fonts/type1/adobe/utopia/putb8a.pfb><C:/Program Files
-/MiKTeX 2.8/fonts/type1/adobe/utopia/putr8a.pfb><C:/Program Files/MiKTeX 2.8/fo
-nts/type1/adobe/utopia/putri8a.pfb>
-Output written on darkchat.pdf (4 pages, 76378 bytes).
-PDF statistics:
- 81 PDF objects out of 1000 (max. 8388607)
- 0 named destinations out of 1000 (max. 500000)
- 13 words of extra memory for PDF output out of 10000 (max. 10000000)
+(Font)              scaled to size 6.99199pt on input line 82.
 
+
+! Package inputenc Error: Unicode char \u8:≤ not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.86 ...ifying a sphere of nodes with distance ≤
+                                                   2, would notify n^2 users...
+
+? 
+! Emergency stop.
+ ...                                              
+                                                  
+l.86 ...ifying a sphere of nodes with distance ≤
+                                                   2, would notify n^2 users...
+
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+ 
+Here is how much of TeX's memory you used:
+ 9768 strings out of 495285
+ 166151 string characters out of 3180392
+ 216798 words of memory out of 3000000
+ 12747 multiletter control sequences out of 15000+200000
+ 87049 words of font info for 78 fonts, out of 3000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 53i,8n,51p,1385b,325s stack positions out of 5000i,500n,10000p,200000b,50000s
+!  ==> Fatal error occurred, no output PDF file produced!
